@@ -30,9 +30,7 @@ git checkout gh-pages
 git pull
 ```
 
-5. Edit `index.html` to remove all references to `/sgn-contract`.
-
-6. Start a Node HTTP server:
+5. Start a Node HTTP server:
 
 ```sh
 http-server --port 80
