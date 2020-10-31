@@ -8301,6 +8301,144 @@
       "links": {},
       "address": "0xfe413cf641478c0ac9fe4b6dd93776e0342621d6",
       "transactionHash": "0x15a2c86d5e3597abddcb26feaafd20da31b87b8558959ba39ddb8ff80ce24c8e"
+    },
+    "3": {
+      "events": {
+        "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "Paused",
+          "type": "event"
+        },
+        "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "Unpaused",
+          "type": "event"
+        },
+        "0x6719d08c1888103bea251a4ed56406bd0c3e69723c8a1686e017e7bbe159b6f8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "PauserAdded",
+          "type": "event"
+        },
+        "0xcd265ebaf09df2871cc7bd4133404a235ba12eff2041bb89d9c714a2621c7c7e": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "PauserRemoved",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0x16de3299ab034ce7e21b22d55f4f9a1474bd3c4d20dbd1cc9bcd39c1ad3d5a2c": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "oldSidechainAddr",
+              "type": "bytes"
+            },
+            {
+              "indexed": true,
+              "name": "newSidechainAddr",
+              "type": "bytes"
+            }
+          ],
+          "name": "UpdateSidechainAddr",
+          "type": "event"
+        },
+        "0xac095ced75d400384d8404a37883183a56b937b8ff8195fa0c52c3ccc8bb8a49": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "consumer",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "AddSubscriptionBalance",
+          "type": "event"
+        },
+        "0x09251621f2e88c5e7f8df91fe1d9e9a70610e20e122945470fddd48af0510426": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "cumulativeMiningReward",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "serviceReward",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "servicePool",
+              "type": "uint256"
+            }
+          ],
+          "name": "RedeemReward",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xa3edd71bcc627601fc7973cdb32fd7aea7d80213",
+      "transactionHash": "0x2356330f022b398baa82931412cb1fb4bd293108cb008275660cf70986641e3e"
     }
   },
   "schemaVersion": "3.2.3",

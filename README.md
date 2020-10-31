@@ -13,7 +13,7 @@ npm install
 2. Build the web UI:
 
 ```sh
-SKIP_PREFLIGHT_CHECK=true npm run build
+SKIP_PREFLIGHT_CHECK=true npm run build:<network>
 ```
 
 3. Push the UI to the `gh-pages` branch:

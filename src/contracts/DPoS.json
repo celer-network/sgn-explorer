@@ -70598,6 +70598,623 @@
       "links": {},
       "address": "0x5216db4d4cb22d1ba38866867c38d8e862974e82",
       "transactionHash": "0x10d0735a66d348417702c9f094abb66a8f44e69df4d3a59f857236f0c08a5fe8"
+    },
+    "3": {
+      "events": {
+        "0xee1504a83b6d4a361f4c1dc78ab59bfa30d6a3b6612c403e86bb01ef2984295f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "WhitelistedAdded",
+          "type": "event"
+        },
+        "0x270d9b30cf5b0793bbfd54c9d5b94aeb49462b8148399000265144a8722da6b6": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "WhitelistedRemoved",
+          "type": "event"
+        },
+        "0x22380c05984257a1cb900161c713dd71d39e74820f1aea43bd3f1bdd20961299": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "WhitelistAdminAdded",
+          "type": "event"
+        },
+        "0x0a8eb35e5ca14b3d6f28e4abf2f128dbab231a58b56e89beb5d636115001e165": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "WhitelistAdminRemoved",
+          "type": "event"
+        },
+        "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "Paused",
+          "type": "event"
+        },
+        "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "Unpaused",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0x40109a070319d6004f4e4b31dba4b605c97bd3474d49865158f55fe093e3b339": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "proposalId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "proposer",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "deposit",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "voteDeadline",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "record",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "newValue",
+              "type": "uint256"
+            }
+          ],
+          "name": "CreateParamProposal",
+          "type": "event"
+        },
+        "0x06c7ef6e19454637e93ee60cc680c61fb2ebabb57e58cf36d94141a5036b3d65": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "proposalId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "voter",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "voteType",
+              "type": "uint8"
+            }
+          ],
+          "name": "VoteParam",
+          "type": "event"
+        },
+        "0x106f43a560e53395081c0423504b476d1a2cfed9d56ff972bf77ae43ff7d4ba4": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "proposalId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "passed",
+              "type": "bool"
+            },
+            {
+              "indexed": false,
+              "name": "record",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "newValue",
+              "type": "uint256"
+            }
+          ],
+          "name": "ConfirmParamProposal",
+          "type": "event"
+        },
+        "0xe6970151d691583ac0aecc2e24c67871318a5c7f7574c6df7929b6dd5d54db68": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "proposalId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "proposer",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "deposit",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "voteDeadline",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "sidechainAddr",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "registered",
+              "type": "bool"
+            }
+          ],
+          "name": "CreateSidechainProposal",
+          "type": "event"
+        },
+        "0x7686976924e1fdb79b36f7445ada20b6e9d3377d85b34d5162116e675c39d34c": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "proposalId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "voter",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "voteType",
+              "type": "uint8"
+            }
+          ],
+          "name": "VoteSidechain",
+          "type": "event"
+        },
+        "0x2c26ff0b5547eb09df5dde3569782330829ac9ffa9811847beab5d466066801c": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "proposalId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "passed",
+              "type": "bool"
+            },
+            {
+              "indexed": false,
+              "name": "sidechainAddr",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "registered",
+              "type": "bool"
+            }
+          ],
+          "name": "ConfirmSidechainProposal",
+          "type": "event"
+        },
+        "0x6719d08c1888103bea251a4ed56406bd0c3e69723c8a1686e017e7bbe159b6f8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "PauserAdded",
+          "type": "event"
+        },
+        "0xcd265ebaf09df2871cc7bd4133404a235ba12eff2041bb89d9c714a2621c7c7e": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "PauserRemoved",
+          "type": "event"
+        },
+        "0x453d56a841836718d9e848e968068cbc2af21ca29d1527fbebd231dc46ceffaa": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "minSelfStake",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "commissionRate",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "rateLockEndTime",
+              "type": "uint256"
+            }
+          ],
+          "name": "InitializeCandidate",
+          "type": "event"
+        },
+        "0xd1388fca1fdda1adbe79c9535b48b22e71aa7815469abb61cdbab2a7b4ccd28a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "announcedRate",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "announcedLockEndTime",
+              "type": "uint256"
+            }
+          ],
+          "name": "CommissionRateAnnouncement",
+          "type": "event"
+        },
+        "0x37954fc2aa8b4424ad16c75da2ea4d51ba08ef9e07907e37ccae54a0b4ce1e9e": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "newRate",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "newLockEndTime",
+              "type": "uint256"
+            }
+          ],
+          "name": "UpdateCommissionRate",
+          "type": "event"
+        },
+        "0x4c626e5cfbf8848bfc43930276036d8e6c5c6db09a8fea30eea53eaa034158af": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "minSelfStake",
+              "type": "uint256"
+            }
+          ],
+          "name": "UpdateMinSelfStake",
+          "type": "event"
+        },
+        "0x500599802164a08023e87ffc3eed0ba3ae60697b3083ba81d046683679d81c6b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "delegator",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "newStake",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "stakingPool",
+              "type": "uint256"
+            }
+          ],
+          "name": "Delegate",
+          "type": "event"
+        },
+        "0x63f783ba869265648de5e70add96be9f4914e3bde064fdc19fd7e6a8ebf2f46c": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "ethAddr",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "changeType",
+              "type": "uint8"
+            }
+          ],
+          "name": "ValidatorChange",
+          "type": "event"
+        },
+        "0x585e40624b400c05be4193af453d2fd2e69facd17163bda6afd44546f3dbbaa8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "delegator",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "WithdrawFromUnbondedCandidate",
+          "type": "event"
+        },
+        "0x7171946bb2a9ef55fcb2eb8cef679db45e2e3a8cef9a44567d34d202b65ff0b1": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "delegator",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "withdrawAmount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "proposedTime",
+              "type": "uint256"
+            }
+          ],
+          "name": "IntendWithdraw",
+          "type": "event"
+        },
+        "0x08d0283ea9a2e520a2f09611cf37ca6eb70f62e9a807e53756047dd2dc027220": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "delegator",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "ConfirmWithdraw",
+          "type": "event"
+        },
+        "0x9995717781b7b3ba3dd9e553a2b5a2b7593ad9b71f5022a3691a089d5189bd19": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "validator",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "delegator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "Slash",
+          "type": "event"
+        },
+        "0xf9edf8bcbb705aa22a96ed2eaeb81b1a55c2035868721a08555d82299fdc1949": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "delegator",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "delegatorStake",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "candidatePool",
+              "type": "uint256"
+            }
+          ],
+          "name": "UpdateDelegatedStake",
+          "type": "event"
+        },
+        "0x92c2a7173158b7618078365b4ad89fd1f774ae4aa04f39e10b966b47f469d34b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "indemnitee",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "Compensate",
+          "type": "event"
+        },
+        "0xbe85a9a7aa606febeaa35606e49cd7324c63cf970f4f5fd0c7e983f42b20b219": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "candidate",
+              "type": "address"
+            }
+          ],
+          "name": "CandidateUnbonded",
+          "type": "event"
+        },
+        "0xc243dafa8ee55923dad771198c225cf6dfcdc5e405eda7d4da42b6c6fa018de7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "reward",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "miningPool",
+              "type": "uint256"
+            }
+          ],
+          "name": "RedeemMiningReward",
+          "type": "event"
+        },
+        "0x97e19c4040b6c46d4275e0c4fea68f8f92c81138372ffdb089932c211938f765": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "contributor",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "contribution",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "miningPoolSize",
+              "type": "uint256"
+            }
+          ],
+          "name": "MiningPoolContribution",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x5d3494181c3f219a610423804c08cce18f4a41e6",
+      "transactionHash": "0x71967fd19a5163c5fd8be2703de628d5882f14528e3da5a652241cc5229e0f1c"
     }
   },
   "schemaVersion": "3.2.3",

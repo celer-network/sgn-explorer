@@ -39,7 +39,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build:ropsten": "REACT_APP_NETWORK_ID=3 react-scripts build",
+    "build:mainnet": "REACT_APP_NETWORK_ID=1 react-scripts build",
     "deploy": "gh-pages -d build --message \"[skip ci] Update gh-pages\"",
     "test": "react-scripts test --env=jsdom",
     "lint": "eslint src --ignore-path .gitignore",

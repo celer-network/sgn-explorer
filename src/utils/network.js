@@ -8,25 +8,37 @@ const networkConfigs = {};
 
 const localNetworkConfig = {};
 
-export const getNetworkConfig = networkID => {
-    let networkConfig = localNetworkConfig;
-    if (networkConfigs[networkID]) {
-        networkConfig = networkConfigs[networkID];
-    }
+export const getNetworkConfig = (networkID) => {
+  let networkConfig = localNetworkConfig;
+  if (networkConfigs[networkID]) {
+    networkConfig = networkConfigs[networkID];
+  }
 
-    return networkConfig;
+  return networkConfig;
 };
 
-export const checkNetworkCompatbility = () => {
-    if (process.env.NODE_ENV === 'development') {
-        return;
-    }
+export const checkNetworkCompatibility = () => {
+  if (process.env.NODE_ENV === 'development') {
+    return;
+  }
 
-    const networkVersion = window.web3.currentProvider.networkVersion;
-    if (networkVersion !== ROPSTEN) {
-        Modal.error({
-            title: 'Current network is not supported',
-            content: 'Please switch to ropsten'
-        });
-    }
+  const networkVersion = window.web3.currentProvider.networkVersion;
+  const requiredId = process.env.REACT_APP_NETWORK_ID;
+  let requiredName;
+  switch (requiredId) {
+    case ROPSTEN:
+      requiredName = 'ropsten';
+      break;
+    case MAINNET:
+      requiredName = 'mainnet';
+      break;
+    default:
+      requiredName = 'unknown';
+  }
+  if (networkVersion !== requiredId) {
+    Modal.error({
+      title: 'Current network is not supported',
+      content: `Please switch to ${requiredName}`
+    });
+  }
 };

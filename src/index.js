@@ -1,25 +1,21 @@
 import dva from 'dva';
 import createLoading from 'dva-loading';
 import { all, fork } from 'redux-saga/effects';
-import {
-  generateContractsInitialState,
-  drizzleReducers,
-  drizzleSagas
-} from 'drizzle';
+import { generateContractsInitialState, drizzleReducers, drizzleSagas } from 'drizzle';
 import { message } from 'antd';
 
 import contractOptions from './utils/contracts';
-import { checkNetworkCompatbility } from './utils/network';
+import { checkNetworkCompatibility } from './utils/network';
 import CELRModel from './models/celr-token';
 import DPoSModel from './models/dpos';
 import SGNModel from './models/sgn';
 import NetworkModel from './models/network';
 
 function* rootSaga() {
-  yield all(drizzleSagas.map(saga => fork(saga)));
+  yield all(drizzleSagas.map((saga) => fork(saga)));
 }
 
-checkNetworkCompatbility();
+checkNetworkCompatibility();
 
 // 1. Initialize
 const app = dva({
