@@ -19,7 +19,7 @@ export const getNetworkConfig = (networkID) => {
 
 export const checkNetworkCompatibility = () => {
   if (process.env.NODE_ENV === 'development') {
-    return;
+    return true;
   }
 
   const networkVersion = window.web3.currentProvider.networkVersion;
@@ -40,5 +40,7 @@ export const checkNetworkCompatibility = () => {
       title: 'Current network is not supported',
       content: `Please switch to ${requiredName}`
     });
+    return false;
   }
+  return true;
 };

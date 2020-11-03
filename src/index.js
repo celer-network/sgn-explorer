@@ -15,8 +15,6 @@ function* rootSaga() {
   yield all(drizzleSagas.map((saga) => fork(saga)));
 }
 
-checkNetworkCompatibility();
-
 // 1. Initialize
 const app = dva({
   initialState: {
@@ -55,5 +53,7 @@ app.model(NetworkModel);
 app.router(require('./router.js').default);
 
 // 5. Start
-app.start('#root');
-app._store.runSaga(rootSaga);
+if (checkNetworkCompatibility()) {
+  app.start('#root');
+  app._store.runSaga(rootSaga);
+}
