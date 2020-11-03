@@ -25,7 +25,6 @@ npm run deploy
 4. Update the local `gh-pages` branch:
 
 ```sh
-cd ..
 git checkout gh-pages
 git pull
 ```
