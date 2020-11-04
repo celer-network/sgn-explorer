@@ -16,16 +16,16 @@ npm install
 SKIP_PREFLIGHT_CHECK=true npm run build:<network>
 ```
 
-3. Push the UI to the `gh-pages` branch:
+3. Push the UI to a deployment branch:
 
 ```sh
-npm run deploy
+npm run deploy:<network>
 ```
 
-4. Update the local `gh-pages` branch:
+4. On the deployment machine, update the local deployment branch:
 
 ```sh
-git checkout gh-pages
+git checkout deploy-<network>
 git pull
 ```
 

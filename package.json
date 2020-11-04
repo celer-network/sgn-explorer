@@ -41,7 +41,8 @@
     "start": "react-scripts start",
     "build:ropsten": "REACT_APP_NETWORK_ID=3 react-scripts build",
     "build:mainnet": "REACT_APP_NETWORK_ID=1 react-scripts build",
-    "deploy": "gh-pages -d build --message \"[skip ci] Update gh-pages\"",
+    "deploy:ropsten": "gh-pages -b deploy-ropsten -d build --message \"[skip ci] Update ropsten deployment\"",
+    "deploy:mainnet": "gh-pages -b deploy-mainnet -d build --message \"[skip ci] Update mainnet deployment\"",
     "test": "react-scripts test --env=jsdom",
     "lint": "eslint src --ignore-path .gitignore",
     "lint-fix": "eslint src --fix --ignore-path .gitignore"
