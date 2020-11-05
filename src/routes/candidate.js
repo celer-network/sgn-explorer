@@ -1,20 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { drizzleConnect } from 'drizzle-react';
+import { drizzleConnect } from '@drizzle/react-plugin';
 import bech32 from 'bech32';
 import web3 from 'web3';
-import {
-  Card,
-  Skeleton,
-  Statistic,
-  Row,
-  Col,
-  Menu,
-  Dropdown,
-  Icon,
-  Tabs
-} from 'antd';
+import { Card, Skeleton, Statistic, Row, Col, Menu, Dropdown, Icon, Tabs } from 'antd';
 
 import DelegateForm from '../components/candidate/delegate-form';
 import WithdrawForm from '../components/candidate/withdraw-form';
@@ -40,23 +30,6 @@ class Candidate extends React.Component {
 
     const candidateId = props.match.params.id;
     this.contracts.SGN.methods.sidechainAddrMap.cacheCall(candidateId);
-    // this.contracts.DPoS.events.Delegate(
-    //   {
-    //     fromBlock: 0,
-    //     filter: { candidate: candidateId }
-    //   },
-    //   (err, event) => {
-    //     if (err) {
-    //       return;
-    //     }
-
-    //     const { delegator, candidate } = event.returnValues;
-    //     this.contracts.DPoS.methods.getDelegatorInfo.cacheCall(
-    //       candidate,
-    //       delegator
-    //     );
-    //   }
-    // );
 
     this.contracts.DPoS.events.Slash(
       {
@@ -79,31 +52,28 @@ class Candidate extends React.Component {
     const { match, DPoS = {} } = props;
     const candidateId = match.params.id;
     const candidates = _.values(DPoS.getCandidateInfo);
-    const candidate = _.find(
-      candidates,
-      candidate => candidate.args[0] === candidateId
-    );
+    const candidate = _.find(candidates, (candidate) => candidate.args[0] === candidateId);
     const delegators = _.values(DPoS.getDelegatorInfo).filter(
-      delegator => delegator.args[0] === candidateId
+      (delegator) => delegator.args[0] === candidateId
     );
 
     return { candidate, candidateId, delegators };
   }
 
   toggleDelegateModal = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       isDelegateModalVisible: !prevState.isDelegateModalVisible
     }));
   };
 
   toggleWithdrawModal = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       isWithdrawModalVisible: !prevState.isWithdrawModalVisible
     }));
   };
 
   toggleCommissionModal = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       isCommissionModalVisible: !prevState.isCommissionModalVisible
     }));
   };
@@ -134,12 +104,8 @@ class Candidate extends React.Component {
           <Menu.Item onClick={this.toggleWithdrawModal}>Withdraw</Menu.Item>
         ) : (
           [
-            <Menu.Item onClick={this.toggleWithdrawModal}>
-              Initialize Withdraw
-            </Menu.Item>,
-            <Menu.Item onClick={this.confirmWithdraw}>
-              Confirm Withdraw
-            </Menu.Item>
+            <Menu.Item onClick={this.toggleWithdrawModal}>Initialize Withdraw</Menu.Item>,
+            <Menu.Item onClick={this.confirmWithdraw}>Confirm Withdraw</Menu.Item>
           ]
         )}
         {isOwner && (
@@ -152,9 +118,7 @@ class Candidate extends React.Component {
             Confirm Increase Commission Rate
           </Menu.Item>
         )}
-        {isOwner && (
-          <Menu.Item onClick={this.claimValidator}>Claim Validator</Menu.Item>
-        )}
+        {isOwner && <Menu.Item onClick={this.claimValidator}>Claim Validator</Menu.Item>}
       </Menu>
     );
 
@@ -171,23 +135,14 @@ class Candidate extends React.Component {
     const { SGN } = this.props;
     const { candidate, slashes } = this.state;
     const candidateId = candidate.args[0];
-    const {
-      minSelfStake,
-      stakingPool,
-      status,
-      commissionRate,
-      rateLockEndTime
-    } = candidate.value;
+    const { minSelfStake, stakingPool, status, commissionRate, rateLockEndTime } = candidate.value;
     const sidechainHexAddr = _.chain(SGN.sidechainAddrMap)
-      .find(data => data.args[0] === candidateId)
+      .find((data) => data.args[0] === candidateId)
       .get('value', '')
       .value();
     const sidechainAddr =
       sidechainHexAddr &&
-      bech32.encode(
-        'sgn',
-        bech32.toWords(web3.utils.hexToBytes(sidechainHexAddr))
-      );
+      bech32.encode('sgn', bech32.toWords(web3.utils.hexToBytes(sidechainHexAddr)));
 
     return (
       <Row style={{ marginTop: '10px' }}>
@@ -198,28 +153,16 @@ class Candidate extends React.Component {
           <Statistic title="Status" value={CANDIDATE_STATUS[status]} />
         </Col>
         <Col span={12}>
-          <Statistic
-            title="Min Self Stake"
-            value={formatCelrValue(minSelfStake)}
-          />
+          <Statistic title="Min Self Stake" value={formatCelrValue(minSelfStake)} />
         </Col>
         <Col span={12}>
-          <Statistic
-            title="Staking Pool"
-            value={formatCelrValue(stakingPool)}
-          />
+          <Statistic title="Staking Pool" value={formatCelrValue(stakingPool)} />
         </Col>
         <Col span={12}>
-          <Statistic
-            title="Commission Rate"
-            value={`${commissionRate / RATE_BASE} %`}
-          />
+          <Statistic title="Commission Rate" value={`${commissionRate / RATE_BASE} %`} />
         </Col>
         <Col span={12}>
-          <Statistic
-            title="Rate Lock End Time"
-            value={`${rateLockEndTime} block height`}
-          />
+          <Statistic title="Rate Lock End Time" value={`${rateLockEndTime} block height`} />
         </Col>
         <Col span={12}>
           <Statistic title="Sidechain Address" value={sidechainAddr} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { drizzleConnect } from 'drizzle-react';
+import { drizzleConnect } from '@drizzle/react-plugin';
 import { Skeleton, Card, Statistic, Row, Col, Button, message } from 'antd';
 import axios from 'axios';
 
@@ -19,12 +19,8 @@ class Reward extends React.Component {
     this.contracts = context.drizzle.contracts;
     this.state = {};
 
-    this.contracts.SGN.methods.redeemedServiceReward.cacheCall(
-      this.currentUser
-    );
-    this.contracts.DPoS.methods.redeemedMiningReward.cacheCall(
-      this.currentUser
-    );
+    this.contracts.SGN.methods.redeemedServiceReward.cacheCall(this.currentUser);
+    this.contracts.DPoS.methods.redeemedMiningReward.cacheCall(this.currentUser);
 
     this.gateway = axios.create({
       baseURL: setting.gateway,
@@ -33,14 +29,14 @@ class Reward extends React.Component {
 
     this.gateway
       .get(`/validator/reward/${this.currentUser}`)
-      .then(res => {
+      .then((res) => {
         const { result } = res.data;
         this.setState({
           miningReward: result.mining_reward,
           serviceReward: result.service_reward
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
 
         if (err.response) {
@@ -48,9 +44,7 @@ class Reward extends React.Component {
           return;
         }
 
-        message.warning(
-          'Please config gateway url in setting to load sgn reward correctly'
-        );
+        message.warning('Please config gateway url in setting to load sgn reward correctly');
       });
   }
 
@@ -60,11 +54,9 @@ class Reward extends React.Component {
         eth_addr: this.currentUser
       })
       .then(() => {
-        message.success(
-          'Success! Please wait a few seconds to trigger redeem.'
-        );
+        message.success('Success! Please wait a few seconds to trigger redeem.');
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   };
@@ -72,12 +64,10 @@ class Reward extends React.Component {
   redeemReward = () => {
     this.gateway
       .get(`/validator/rewardRequest/${this.currentUser}`)
-      .then(res => {
-        this.contracts.SGN.methods.redeemReward.cacheSend(
-          '0x' + res.data.result
-        );
+      .then((res) => {
+        this.contracts.SGN.methods.redeemReward.cacheSend('0x' + res.data.result);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   };
@@ -121,19 +111,13 @@ class Reward extends React.Component {
           <Col span={12}>
             <Statistic
               title="Redeemed Mining Reward"
-              value={formatCelrValue(
-                _.values(redeemedMiningReward)[0].value,
-                true
-              )}
+              value={formatCelrValue(_.values(redeemedMiningReward)[0].value, true)}
             />
           </Col>
           <Col span={12}>
             <Statistic
               title="Redeemed Service Reward"
-              value={formatCelrValue(
-                _.values(redeemedServiceReward)[0].value,
-                true
-              )}
+              value={formatCelrValue(_.values(redeemedServiceReward)[0].value, true)}
             />
           </Col>
         </Row>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { drizzleConnect } from 'drizzle-react';
+import { drizzleConnect } from '@drizzle/react-plugin';
 import { routerRedux } from 'dva/router';
 import { Table } from 'antd';
 import web3 from 'web3';
@@ -28,7 +28,7 @@ const columns = [
     filterMultiple: false,
     onFilter: (value, record) => record.status === value,
     sorter: (a, b) => a.status - b.status,
-    render: text => CANDIDATE_STATUS[text]
+    render: (text) => CANDIDATE_STATUS[text]
   },
   {
     title: 'Staking Pool',
@@ -37,29 +37,27 @@ const columns = [
     sorter: (a, b) => {
       return web3.utils.toBN(a.stakingPool).cmp(web3.utils.toBN(b.stakingPool));
     },
-    render: text => formatCelrValue(text)
+    render: (text) => formatCelrValue(text)
   },
   {
     title: 'Min Self Stake',
     dataIndex: 'minSelfStake',
     sorter: (a, b) => {
-      return web3.utils
-        .toBN(a.minSelfStake)
-        .cmp(web3.utils.toBN(b.minSelfStake));
+      return web3.utils.toBN(a.minSelfStake).cmp(web3.utils.toBN(b.minSelfStake));
     },
-    render: text => formatCelrValue(text)
+    render: (text) => formatCelrValue(text)
   },
   {
     title: 'Commission',
     dataIndex: 'commissionRate',
     width: 140,
     sorter: (a, b) => a.commissionRate - b.commissionRate,
-    render: text => `${text / RATE_BASE} %`
+    render: (text) => `${text / RATE_BASE} %`
   }
 ];
 
 class CandidateTable extends React.Component {
-  onRow = record => {
+  onRow = (record) => {
     const { dispatch } = this.props;
 
     return {
@@ -75,18 +73,13 @@ class CandidateTable extends React.Component {
 
   render() {
     const { candidates } = this.props;
-    const dataSource = candidates.map(candidate => ({
+    const dataSource = candidates.map((candidate) => ({
       ...candidate.value,
       address: candidate.args[0]
     }));
 
     return (
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        pagination={false}
-        onRow={this.onRow}
-      />
+      <Table dataSource={dataSource} columns={columns} pagination={false} onRow={this.onRow} />
     );
   }
 }

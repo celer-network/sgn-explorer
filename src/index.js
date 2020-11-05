@@ -1,7 +1,7 @@
 import dva from 'dva';
 import createLoading from 'dva-loading';
 import { all, fork } from 'redux-saga/effects';
-import { generateContractsInitialState, drizzleReducers, drizzleSagas } from 'drizzle';
+import { generateContractsInitialState, drizzleReducers, drizzleSagas } from '@drizzle/store';
 import { message } from 'antd';
 
 import contractOptions from './utils/contracts';

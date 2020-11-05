@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, routerRedux, Switch, Route, Redirect } from 'dva/router';
 import Dynamic from 'dva/dynamic';
-import { DrizzleProvider } from 'drizzle-react';
-import { LoadingContainer } from 'drizzle-react-components';
+import { DrizzleProvider } from '@drizzle/react-plugin';
+import { LoadingContainer } from '@drizzle/react-components';
 
 import App from './App';
 import contractOptions from './utils/contracts';

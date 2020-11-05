@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { drizzleConnect } from 'drizzle-react';
+import { drizzleConnect } from '@drizzle/react-plugin';
 import { Statistic, Row, Col, message, Table } from 'antd';
 import axios from 'axios';
 import web3 from 'web3';
@@ -19,7 +19,7 @@ const columns = [
       return web3.utils.toBN(a.delegatedStake).cmp(web3.utils.toBN(b.delegatedStake));
     },
     sortOrder: 'descend',
-    render: text => {
+    render: (text) => {
       return formatCelrValue(text);
     }
   }
@@ -37,7 +37,7 @@ class SidechainInfo extends React.Component {
 
     axios
       .get(`${setting.gateway}/validator/candidate/${candidateId}`)
-      .then(res => {
+      .then((res) => {
         const { result } = res.data;
 
         this.setState({
@@ -46,7 +46,7 @@ class SidechainInfo extends React.Component {
           stakingPool: result.staking_pool
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
 
         if (err.response) {
@@ -59,8 +59,8 @@ class SidechainInfo extends React.Component {
 
     axios
       .get(`${setting.gateway}/validator/candidate-delegators/${candidateId}`)
-      .then(res => {
-        const delegators = res.data.result.map(delegator => ({
+      .then((res) => {
+        const delegators = res.data.result.map((delegator) => ({
           candidateAddr: delegator.candidate_addr,
           delegatedStake: delegator.delegated_stake,
           delegatorAddr: delegator.delegator_addr
@@ -69,7 +69,7 @@ class SidechainInfo extends React.Component {
           delegators
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
 
         if (err.response) {
