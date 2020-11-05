@@ -72,7 +72,7 @@ class App extends React.Component {
             {children}
             <ApproveCELRForm visible={isModalVisible} onClose={this.toggleModal} />
           </Content>
-          <Footer style={{ textAlign: 'center' }}>Sgn ©2019 Created by Celer Network</Footer>
+          <Footer style={{ textAlign: 'center' }}>SGN © 2019-2020 Celer Network</Footer>
         </Layout>
       </Layout>
     );
