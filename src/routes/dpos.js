@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { drizzleConnect } from 'drizzle-react';
+import { drizzleConnect } from '@drizzle/react-plugin';
 import { Card } from 'antd';
 
 import CandidateTable from '../components/dpos/candidate-table';

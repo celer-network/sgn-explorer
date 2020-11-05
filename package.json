@@ -14,12 +14,13 @@
   ],
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@drizzle/react-components": "^1.5.3",
+    "@drizzle/react-plugin": "^1.5.3",
+    "@drizzle/store": "^1.5.3",
     "antd": "^3.26.16",
     "axios": "^0.19.0",
     "bech32": "^1.1.4",
-    "drizzle": "^1.4.0",
-    "drizzle-react": "^1.3.0",
-    "drizzle-react-components": "^1.4.0",
+    "browserslist": "^4.14.6",
     "dva": "^2.4.1",
     "dva-loading": "^3.0.11",
     "lodash": "^4.17.14",
@@ -28,14 +29,12 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-intl": "^2.9.0",
-    "web3": "1.0.0-beta.35"
+    "web3": "1.2.1"
   },
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.1",
     "gh-pages": "^2.1.1",
-    "react-scripts": "^3.0.1",
-    "react-test-renderer": "^16.8.6",
-    "redux-logger": "^3.0.6"
+    "react-scripts": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

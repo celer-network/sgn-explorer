@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { drizzleConnect } from 'drizzle-react';
+import { drizzleConnect } from '@drizzle/react-plugin';
 import { withRouter, Link } from 'dva/router';
 import { Layout, Menu, Button } from 'antd';
 
@@ -35,7 +35,7 @@ class App extends React.Component {
   }
 
   toggleModal = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       isModalVisible: !prevState.isModalVisible
     }));
   };
@@ -70,14 +70,9 @@ class App extends React.Component {
         <Layout>
           <Content>
             {children}
-            <ApproveCELRForm
-              visible={isModalVisible}
-              onClose={this.toggleModal}
-            />
+            <ApproveCELRForm visible={isModalVisible} onClose={this.toggleModal} />
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
-            Sgn ©2019 Created by Celer Network
-          </Footer>
+          <Footer style={{ textAlign: 'center' }}>Sgn ©2019 Created by Celer Network</Footer>
         </Layout>
       </Layout>
     );
