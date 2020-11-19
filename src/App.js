@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { drizzleConnect } from '@drizzle/react-plugin';
 import { withRouter, Link } from 'dva/router';
 import { Layout, Menu, Button } from 'antd';
+import { LinkOutlined } from '@ant-design/icons';
 
 import ApproveCELRForm from './components/approve-celr';
 import AccountInfo from './components/account-info';
@@ -55,10 +56,23 @@ class App extends React.Component {
               <Link to="/dpos">Validators</Link>
             </Menu.Item>
             {/* <Menu.Item key="govern">
-                            <Link to="/govern">Govern</Link>
-                        </Menu.Item> */}
+                <Link to="/govern">Govern</Link>
+            </Menu.Item> */}
             <Menu.Item key="reward">
               <Link to="/reward">Reward</Link>
+            </Menu.Item>
+            <Menu.Item>
+              <a
+                href="https://github.com/celer-network/sgn-networks/blob/master/docs/delegator.md"
+                target="_blank"
+              >
+                Delegator Instructions <LinkOutlined />
+              </a>
+            </Menu.Item>
+            <Menu.Item>
+              <a href="https://github.com/celer-network/sgn-networks" target="_blank">
+                Network Configurations <LinkOutlined />
+              </a>
             </Menu.Item>
             <Menu.Item className="approve-celr">
               <Button type="primary" block onClick={this.toggleModal}>

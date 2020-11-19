@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import { drizzleConnect } from '@drizzle/react-plugin';
+import { Statistic, Row, Col, message, Table } from 'antd';
+import axios from 'axios';
 import web3 from 'web3';
-import { Table } from 'antd';
 
 import { formatCelrValue } from '../../utils/unit';
 
 const columns = [
   {
     title: 'Delegator',
-    dataIndex: 'delegator'
+    dataIndex: 'delegatorAddr'
   },
   {
     title: 'Delegated Stake',
@@ -19,67 +19,70 @@ const columns = [
       return web3.utils.toBN(a.delegatedStake).cmp(web3.utils.toBN(b.delegatedStake));
     },
     sortOrder: 'descend',
-    render: (text) => formatCelrValue(text)
-  },
-  {
-    title: 'Undelegating Stake',
-    dataIndex: 'undelegatingStake',
-    render: (text) => formatCelrValue(text)
-  }
-];
-
-const nestedColumns = [
-  {
-    title: 'Intent Withdraw Amount',
-    dataIndex: 'intentAmount'
-  },
-  {
-    title: 'Intent Withdraw Block Height',
-    dataIndex: 'intentProposedTime'
+    render: (text) => {
+      return formatCelrValue(text);
+    }
   }
 ];
 
 class DelegatorTable extends React.Component {
-  expandedRowRender = (record) => {
-    const dataSource = _.zip(record.intentAmounts, record.intentProposedTimes).map(
-      ([intentAmount, intentProposedTime]) => ({
-        intentAmount: formatCelrValue(intentAmount),
-        intentProposedTime
-      })
-    );
+  constructor(props, context) {
+    super(props);
 
-    return <Table columns={nestedColumns} dataSource={dataSource} pagination={false} />;
-  };
+    const {
+      candidateId,
+      network: { setting }
+    } = props;
+    this.state = {};
+
+    axios
+      .get(`${setting.gateway}/validator/candidate-delegators/${candidateId}`)
+      .then((res) => {
+        const delegators = res.data.result.map((delegator) => ({
+          candidateAddr: delegator.candidate_addr,
+          delegatedStake: delegator.delegated_stake,
+          delegatorAddr: delegator.delegator_addr
+        }));
+        this.setState({
+          delegators
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+
+        if (err.response) {
+          message.error(err.response.data.error);
+          return;
+        }
+
+        message.warning('Please config gateway url in setting to load sidechain info correctly');
+      });
+  }
 
   render() {
-    const { delegators } = this.props;
-    const dataSource = delegators
-      .filter((delegator) => delegator.value)
-      .sort((delegator0, delegator1) => {
-        return delegator0.args[1] > delegator1.args[1];
-      })
-      .map((delegator) => ({
-        ...delegator.value,
-        delegator: delegator.args[1]
-      }));
-
+    const { delegators } = this.state;
     return (
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        pagination={false}
-        expandedRowRender={this.expandedRowRender}
-      />
+      <Row>
+        <Col span={24}>
+          <Table dataSource={delegators} columns={columns} pagination={false} />
+        </Col>
+      </Row>
     );
   }
 }
 
-DelegatorTable.propTypes = {
-  delegators: PropTypes.array.isRequired
+DelegatorTable.propTypes = {};
+
+DelegatorTable.contextTypes = {
+  drizzle: PropTypes.object
 };
 
 function mapStateToProps(state) {
-  return {};
+  const { network } = state;
+
+  return {
+    network
+  };
 }
 
 export default drizzleConnect(DelegatorTable, mapStateToProps);

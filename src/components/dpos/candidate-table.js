@@ -40,14 +40,6 @@ const columns = [
     render: (text) => formatCelrValue(text)
   },
   {
-    title: 'Min Self Stake',
-    dataIndex: 'minSelfStake',
-    sorter: (a, b) => {
-      return web3.utils.toBN(a.minSelfStake).cmp(web3.utils.toBN(b.minSelfStake));
-    },
-    render: (text) => formatCelrValue(text)
-  },
-  {
     title: 'Commission',
     dataIndex: 'commissionRate',
     width: 140,
