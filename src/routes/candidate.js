@@ -4,12 +4,13 @@ import _ from 'lodash';
 import { drizzleConnect } from '@drizzle/react-plugin';
 import bech32 from 'bech32';
 import web3 from 'web3';
-import { Card, Skeleton, Statistic, Row, Col, Menu, Dropdown, Icon, Tabs } from 'antd';
+import axios from 'axios';
+import { Card, Skeleton, Statistic, Row, Col, Menu, Dropdown, Icon, Tabs, message } from 'antd';
 
 import DelegateForm from '../components/candidate/delegate-form';
 import WithdrawForm from '../components/candidate/withdraw-form';
 import CommissionForm from '../components/candidate/commission-form';
-import SidechainInfo from '../components/candidate/sidechain-info';
+import DelegatorTable from '../components/candidate/delegator-table';
 import SlashTable from '../components/candidate/slash-table';
 import { formatCelrValue } from '../utils/unit';
 import { CANDIDATE_STATUS } from '../utils/dpos';
@@ -28,7 +29,11 @@ class Candidate extends React.Component {
       isCommissionModalVisible: false
     };
 
-    const candidateId = props.match.params.id;
+    const {
+      match,
+      network: { setting }
+    } = props;
+    const candidateId = match.params.id;
     this.contracts.SGN.methods.sidechainAddrMap.cacheCall(candidateId);
 
     this.contracts.DPoS.events.Slash(
@@ -46,6 +51,28 @@ class Candidate extends React.Component {
         });
       }
     );
+
+    axios
+      .get(`${setting.gateway}/validator/candidate/${candidateId}`)
+      .then((res) => {
+        const { result } = res.data;
+
+        this.setState({
+          ...result,
+          commissionRate: result.commission_rate,
+          stakingPool: result.staking_pool
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+
+        if (err.response) {
+          message.error(err.response.data.error);
+          return;
+        }
+
+        message.warning('Please config gateway url in setting to load sidechain info correctly');
+      });
   }
 
   static getDerivedStateFromProps(props) {
@@ -133,7 +160,7 @@ class Candidate extends React.Component {
 
   renderCandidateDetail = () => {
     const { SGN } = this.props;
-    const { candidate, slashes } = this.state;
+    const { candidate, slashes, description = {} } = this.state;
     const candidateId = candidate.args[0];
     const { minSelfStake, stakingPool, status, commissionRate, rateLockEndTime } = candidate.value;
     const sidechainHexAddr = _.chain(SGN.sidechainAddrMap)
@@ -165,12 +192,18 @@ class Candidate extends React.Component {
           <Statistic title="Rate Lock End Time" value={`${rateLockEndTime} block height`} />
         </Col>
         <Col span={12}>
+          <Statistic title="Website" value={description.website || 'N/A'} />
+        </Col>
+        <Col span={12}>
+          <Statistic title="Contact" value={description.security_contact || 'N/A'} />
+        </Col>
+        <Col span={12}>
           <Statistic title="Sidechain Address" value={sidechainAddr} />
         </Col>
         <Col span={24}>
           <Tabs>
-            <Tabs.TabPane tab="Sidechain" key="sidechain">
-              <SidechainInfo candidateId={candidateId} />
+            <Tabs.TabPane tab="Delegators" key="delegators">
+              <DelegatorTable candidateId={candidateId} />
             </Tabs.TabPane>
             <Tabs.TabPane tab="Slashes" key="slashes">
               <SlashTable slashes={slashes} />
@@ -226,9 +259,10 @@ Candidate.contextTypes = {
 };
 
 function mapStateToProps(state) {
-  const { accounts, contracts, DPoS, SGN } = state;
+  const { accounts, contracts, network, DPoS, SGN } = state;
   return {
     accounts,
+    network,
     DPoS: { ...DPoS, ...contracts.DPoS },
     SGN: { ...SGN, ...contracts.SGN }
   };
