@@ -30,6 +30,10 @@ function RouterConfig({ history, app }) {
     app,
     component: () => import('./routes/reward')
   });
+  const ContractReader = Dynamic({
+    app,
+    component: () => import('./routes/contract-reader')
+  });
 
   return (
     <DrizzleProvider options={contractOptions} store={app._store}>
@@ -40,6 +44,7 @@ function RouterConfig({ history, app }) {
               <Route exact path="/dpos" component={DPoS} />
               <Route exact path="/govern" component={Govern} />
               <Route exact path="/reward" component={Reward} />
+              <Route exact path="/contract-reader" component={ContractReader} />
               <Route exact path="/candidate/:id" component={Candidate} />
               <Route exact path="/" render={redirectToHome} />
             </Switch>

@@ -61,6 +61,9 @@ class App extends React.Component {
             <Menu.Item key="reward">
               <Link to="/reward">Reward</Link>
             </Menu.Item>
+            <Menu.Item key="contract-reader">
+              <Link to="/contract-reader">Contract Reader</Link>
+            </Menu.Item>
             <Menu.Item>
               <a
                 href="https://github.com/celer-network/sgn-networks/blob/master/docs/delegator.md"
