@@ -53,7 +53,9 @@ app.model(NetworkModel);
 app.router(require('./router.js').default);
 
 // 5. Start
-if (checkNetworkCompatibility()) {
-  app.start('#root');
-  app._store.runSaga(rootSaga);
-}
+checkNetworkCompatibility().then((compatible) => {
+  if (compatible) {
+    app.start('#root');
+    app._store.runSaga(rootSaga);
+  }
+});
