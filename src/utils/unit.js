@@ -6,10 +6,7 @@ import './network';
 export const CELR = 'CELR';
 
 export const getUnitByAddress = (supportedTokens, address) => {
-  const token = _.find(
-    supportedTokens,
-    supportedToken => supportedToken.address === address
-  );
+  const token = _.find(supportedTokens, (supportedToken) => supportedToken.address === address);
 
   if (!token) {
     return '';
@@ -20,12 +17,6 @@ export const getUnitByAddress = (supportedTokens, address) => {
 export const formatCurrencyValue = (value, unit, showDecimal) => {
   if (!value) {
     return;
-  }
-
-  const num = _.toNumber(value);
-
-  if (num < 100000) {
-    return `${value} wei`;
   }
 
   if (showDecimal) {
