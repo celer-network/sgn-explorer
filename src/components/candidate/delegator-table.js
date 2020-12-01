@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { drizzleConnect } from '@drizzle/react-plugin';
-import { Statistic, Row, Col, message, Table } from 'antd';
+import { Row, Col, message, Table } from 'antd';
 import axios from 'axios';
 import web3 from 'web3';
 
