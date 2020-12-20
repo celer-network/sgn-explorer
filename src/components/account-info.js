@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Statistic, Button } from 'antd';
 
-import Setting from './setting';
 import { formatCelrValue } from '../utils/unit';
 
 function AccountInfo(props) {
@@ -17,7 +16,6 @@ function AccountInfo(props) {
       >
         <Statistic title="CELR allowance for DPoS Contract" value={formatCelrValue(celrValue)} />
       </Card>
-      <Setting visible={showSetting} onClose={() => setShowSetting(false)} />
     </>
   );
 }

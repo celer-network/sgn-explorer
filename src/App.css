@@ -16,9 +16,10 @@
   text-overflow: ellipsis;
 }
 
-.ant-menu-item.approve-celr {
+.setting {
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
+  right: 10px;
 }
 
 .ant-statistic-content {
@@ -37,4 +38,8 @@
 
 .dropdown-filter .ant-form-item-control-wrapper {
   display: inline-block;
+}
+
+.delegate-btn {
+  margin-right: 10px;
 }
