@@ -5,7 +5,19 @@ import { drizzleConnect } from '@drizzle/react-plugin';
 import bech32 from 'bech32';
 import web3 from 'web3';
 import axios from 'axios';
-import { Card, Skeleton, Statistic, Row, Col, Menu, Dropdown, Icon, Tabs, message } from 'antd';
+import {
+  Button,
+  Card,
+  Skeleton,
+  Statistic,
+  Row,
+  Col,
+  Menu,
+  Dropdown,
+  Icon,
+  Tabs,
+  message
+} from 'antd';
 
 import DelegateForm from '../components/candidate/delegate-form';
 import WithdrawForm from '../components/candidate/withdraw-form';
@@ -126,7 +138,6 @@ class Candidate extends React.Component {
     const isOwner = accounts[0] === candidate.args[0];
     const menu = (
       <Menu>
-        <Menu.Item onClick={this.toggleDelegateModal}>Delegate</Menu.Item>
         {status === '0' ? (
           <Menu.Item onClick={this.toggleWithdrawModal}>Withdraw</Menu.Item>
         ) : (
@@ -150,11 +161,11 @@ class Candidate extends React.Component {
     );
 
     return (
-      <Dropdown overlay={menu}>
-        <a className="ant-dropdown-link">
-          Actions <Icon type="down" />
-        </a>
-      </Dropdown>
+      <div>
+        <Dropdown.Button type="primary" onClick={this.toggleDelegateModal} overlay={menu}>
+          Delegate
+        </Dropdown.Button>
+      </div>
     );
   };
 

@@ -6,8 +6,7 @@ import { withRouter, Link } from 'dva/router';
 import { Layout, Menu, Button } from 'antd';
 import { LinkOutlined } from '@ant-design/icons';
 
-import ApproveCELRForm from './components/approve-celr';
-import AccountInfo from './components/account-info';
+import Setting from './components/setting';
 import { subscribeEvent, subscribeChainInfo } from './utils/subscribe';
 import { getNetworkConfig } from './utils/network';
 
@@ -19,7 +18,7 @@ class App extends React.Component {
   constructor(props, context) {
     super(props);
 
-    this.state = { isModalVisible: false };
+    this.state = { showSetting: false };
     this.contracts = context.drizzle.contracts;
     this.web3 = context.drizzle.web3;
   }
@@ -35,22 +34,20 @@ class App extends React.Component {
     });
   }
 
-  toggleModal = () => {
+  toggleSetting = () => {
     this.setState((prevState) => ({
-      isModalVisible: !prevState.isModalVisible
+      showSetting: !prevState.showSetting
     }));
   };
 
   render() {
-    const { isModalVisible } = this.state;
-    const { children, location, CELRToken } = this.props;
+    const { showSetting } = this.state;
+    const { children, location } = this.props;
     const { pathname } = location;
-    const celerAllowance = _.values(CELRToken.allowance)[0] || {};
 
     return (
       <Layout>
         <Sider>
-          <AccountInfo celrValue={celerAllowance.value} />
           <Menu theme="dark" mode="inline" selectedKeys={[pathname.slice(1)]}>
             <Menu.Item key="dpos">
               <Link to="/dpos">Validators</Link>
@@ -69,26 +66,24 @@ class App extends React.Component {
                 href="https://github.com/celer-network/sgn-networks/blob/master/docs/delegator.md"
                 target="_blank"
               >
-                Delegator Instructions <LinkOutlined />
+                <LinkOutlined />
+                Delegator Instructions
               </a>
             </Menu.Item>
             <Menu.Item>
               <a href="https://github.com/celer-network/sgn-networks" target="_blank">
-                Network Configurations <LinkOutlined />
+                <LinkOutlined />
+                Network Configurations
               </a>
             </Menu.Item>
-            <Menu.Item className="approve-celr">
-              <Button type="primary" block onClick={this.toggleModal}>
-                Approve CELR
-              </Button>
-            </Menu.Item>
+            <div className="setting">
+              <Button type="primary" icon="setting" title="Setting" onClick={this.toggleSetting} />
+              <Setting visible={showSetting} onClose={this.toggleSetting} />
+            </div>
           </Menu>
         </Sider>
         <Layout>
-          <Content>
-            {children}
-            <ApproveCELRForm visible={isModalVisible} onClose={this.toggleModal} />
-          </Content>
+          <Content>{children}</Content>
           <Footer style={{ textAlign: 'center' }}>SGN © 2019-2020 Celer Network</Footer>
         </Layout>
       </Layout>
