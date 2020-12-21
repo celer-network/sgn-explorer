@@ -28,6 +28,8 @@ import { formatCelrValue } from '../utils/unit';
 import { CANDIDATE_STATUS } from '../utils/dpos';
 import { RATE_BASE } from '../utils/constant';
 
+const ButtonGroup = Button.Group;
+
 class Candidate extends React.Component {
   constructor(props, context) {
     super(props);
@@ -136,34 +138,26 @@ class Candidate extends React.Component {
     const { candidate } = this.state;
     const { status } = candidate.value;
     const isOwner = accounts[0] === candidate.args[0];
-    const menu = (
-      <Menu>
+
+    return (
+      <ButtonGroup>
+        <Button onClick={this.toggleDelegateModal}>Delegate</Button>
         {status === '0' ? (
-          <Menu.Item onClick={this.toggleWithdrawModal}>Withdraw</Menu.Item>
+          <Button onClick={this.toggleWithdrawModal}>Withdraw</Button>
         ) : (
           [
-            <Menu.Item onClick={this.toggleWithdrawModal}>Initialize Withdraw</Menu.Item>,
-            <Menu.Item onClick={this.confirmWithdraw}>Confirm Withdraw</Menu.Item>
+            <Button onClick={this.toggleWithdrawModal}>Initialize Withdraw</Button>,
+            <Button onClick={this.confirmWithdraw}>Confirm Withdraw</Button>
           ]
         )}
         {isOwner && [
-          <Menu.Item onClick={this.toggleCommissionModal}>
-            Announce Increase Commission Rate
-          </Menu.Item>,
-          <Menu.Item onClick={this.confirmIncreaseCommissionRate}>
+          <Button onClick={this.toggleCommissionModal}>Announce Increase Commission Rate</Button>,
+          <Button onClick={this.confirmIncreaseCommissionRate}>
             Confirm Increase Commission Rate
-          </Menu.Item>,
-          <Menu.Item onClick={this.claimValidator}>Claim Validator</Menu.Item>
+          </Button>,
+          <Button onClick={this.claimValidator}>Claim Validator</Button>
         ]}
-      </Menu>
-    );
-
-    return (
-      <div>
-        <Dropdown.Button type="primary" onClick={this.toggleDelegateModal} overlay={menu}>
-          Delegate
-        </Dropdown.Button>
-      </div>
+      </ButtonGroup>
     );
   };
 
