@@ -141,21 +141,33 @@ class Candidate extends React.Component {
 
     return (
       <ButtonGroup>
-        <Button onClick={this.toggleDelegateModal}>Delegate</Button>
+        <Button type="primary" onClick={this.toggleDelegateModal}>
+          Delegate
+        </Button>
         {status === '0' ? (
-          <Button onClick={this.toggleWithdrawModal}>Withdraw</Button>
+          <Button type="primary" onClick={this.toggleWithdrawModal}>
+            Withdraw
+          </Button>
         ) : (
           [
-            <Button onClick={this.toggleWithdrawModal}>Initialize Withdraw</Button>,
-            <Button onClick={this.confirmWithdraw}>Confirm Withdraw</Button>
+            <Button type="primary" onClick={this.toggleWithdrawModal}>
+              Initialize Withdraw
+            </Button>,
+            <Button type="primary" onClick={this.confirmWithdraw}>
+              Confirm Withdraw
+            </Button>
           ]
         )}
         {isOwner && [
-          <Button onClick={this.toggleCommissionModal}>Announce Increase Commission Rate</Button>,
-          <Button onClick={this.confirmIncreaseCommissionRate}>
+          <Button type="primary" onClick={this.toggleCommissionModal}>
+            Announce Increase Commission Rate
+          </Button>,
+          <Button type="primary" onClick={this.confirmIncreaseCommissionRate}>
             Confirm Increase Commission Rate
           </Button>,
-          <Button onClick={this.claimValidator}>Claim Validator</Button>
+          <Button type="primary" onClick={this.claimValidator}>
+            Claim Validator
+          </Button>
         ]}
       </ButtonGroup>
     );
