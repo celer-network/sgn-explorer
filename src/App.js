@@ -47,7 +47,7 @@ class App extends React.Component {
 
     return (
       <Layout>
-        <Sider>
+        <Sider width={220}>
           <Menu theme="dark" mode="inline" selectedKeys={[pathname.slice(1)]}>
             <Menu.Item key="dpos">
               <Link to="/dpos">Validators</Link>
