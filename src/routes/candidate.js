@@ -140,7 +140,7 @@ class Candidate extends React.Component {
     const isOwner = accounts[0] === candidate.args[0];
 
     return (
-      <ButtonGroup>
+      <div>
         <Button type="primary" onClick={this.toggleDelegateModal}>
           Delegate
         </Button>
@@ -169,7 +169,7 @@ class Candidate extends React.Component {
             Claim Validator
           </Button>
         ]}
-      </ButtonGroup>
+      </div>
     );
   };
 
