@@ -146,17 +146,15 @@ class Candidate extends React.Component {
             <Menu.Item onClick={this.confirmWithdraw}>Confirm Withdraw</Menu.Item>
           ]
         )}
-        {isOwner && (
+        {isOwner && [
           <Menu.Item onClick={this.toggleCommissionModal}>
             Announce Increase Commission Rate
-          </Menu.Item>
-        )}
-        {isOwner && (
+          </Menu.Item>,
           <Menu.Item onClick={this.confirmIncreaseCommissionRate}>
             Confirm Increase Commission Rate
-          </Menu.Item>
-        )}
-        {isOwner && <Menu.Item onClick={this.claimValidator}>Claim Validator</Menu.Item>}
+          </Menu.Item>,
+          <Menu.Item onClick={this.claimValidator}>Claim Validator</Menu.Item>
+        ]}
       </Menu>
     );
 
