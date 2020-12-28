@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import { drizzleConnect } from '@drizzle/react-plugin';
 import { withRouter, Link } from 'dva/router';
 import { Layout, Menu, Button } from 'antd';
@@ -74,6 +73,12 @@ class App extends React.Component {
               <a href="https://github.com/celer-network/sgn-networks" target="_blank">
                 <LinkOutlined />
                 Network Configurations
+              </a>
+            </Menu.Item>
+            <Menu.Item>
+              <a href="https://discord.gg/jAehyvryHe" target="_blank">
+                <LinkOutlined />
+                Community Support
               </a>
             </Menu.Item>
             <div className="setting">
