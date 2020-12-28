@@ -5,19 +5,7 @@ import { drizzleConnect } from '@drizzle/react-plugin';
 import bech32 from 'bech32';
 import web3 from 'web3';
 import axios from 'axios';
-import {
-  Button,
-  Card,
-  Skeleton,
-  Statistic,
-  Row,
-  Col,
-  Menu,
-  Dropdown,
-  Icon,
-  Tabs,
-  message
-} from 'antd';
+import { Button, Card, Skeleton, Statistic, Row, Col, Tabs, message } from 'antd';
 
 import DelegateForm from '../components/candidate/delegate-form';
 import WithdrawForm from '../components/candidate/withdraw-form';
@@ -27,8 +15,6 @@ import SlashTable from '../components/candidate/slash-table';
 import { formatCelrValue } from '../utils/unit';
 import { CANDIDATE_STATUS } from '../utils/dpos';
 import { RATE_BASE } from '../utils/constant';
-
-const ButtonGroup = Button.Group;
 
 class Candidate extends React.Component {
   constructor(props, context) {
