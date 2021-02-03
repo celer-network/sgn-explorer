@@ -33,7 +33,8 @@ class DelegateForm extends React.Component {
             this.contracts.DPoS.address,
             web3.utils.toWei(Number.MAX_SAFE_INTEGER.toString(), 'ether')
           )
-          .send({}, () => {
+          .send({})
+          .on('receipt', (receipt) => {
             this.sendDelegate(value);
           });
         this.setState({
