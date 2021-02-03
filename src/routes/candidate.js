@@ -52,6 +52,11 @@ class Candidate extends React.Component {
       }
     );
 
+    this.contracts.DPoS.methods.getDelegatorInfo.cacheCall(
+      candidateId,
+      window.ethereum.selectedAddress
+    );
+
     axios
       .get(`${setting.gateway}/validator/candidate/${candidateId}`)
       .then((res) => {
@@ -120,9 +125,14 @@ class Candidate extends React.Component {
   };
 
   renderAction = () => {
-    const { accounts } = this.props;
+    const { accounts, DPoS } = this.props;
     const { candidate } = this.state;
     const { status } = candidate.value;
+
+    // TODO: Calculate actual withdraw amount
+    const delegatorInfo = _.values(DPoS.getDelegatorInfo)[0];
+    const undelegatingStake = (delegatorInfo && delegatorInfo.value.undelegatingStake) || '0';
+
     const isOwner = accounts[0] === candidate.args[0];
 
     return (
@@ -139,7 +149,11 @@ class Candidate extends React.Component {
             <Button type="primary" onClick={this.toggleWithdrawModal}>
               Initialize Withdraw
             </Button>,
-            <Button type="primary" onClick={this.confirmWithdraw}>
+            <Button
+              type="primary"
+              onClick={this.confirmWithdraw}
+              disabled={undelegatingStake === '0'}
+            >
               Confirm Withdraw
             </Button>
           ]
