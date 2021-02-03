@@ -57,5 +57,7 @@ checkNetworkCompatibility().then((compatible) => {
   if (compatible) {
     app.start('#root');
     app._store.runSaga(rootSaga);
+  } else {
+    message.warning('Please connect to the Ethereum network');
   }
 });
