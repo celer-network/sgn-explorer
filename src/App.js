@@ -9,6 +9,8 @@ import Setting from './components/setting';
 import { subscribeEvent, subscribeChainInfo } from './utils/subscribe';
 import { getNetworkConfig } from './utils/network';
 
+import Header from "./components/header";
+
 import './App.css';
 
 const { Sider, Content, Footer } = Layout;
@@ -41,19 +43,17 @@ class App extends React.Component {
 
   render() {
     const { showSetting } = this.state;
-    const { children, location } = this.props;
+    const { children, location, accounts } = this.props;
     const { pathname } = location;
-
+    console.log(location, accounts);
     return (
       <Layout>
-        <Sider width={220}>
+        <Header location={location} accounts={accounts}/>
+        {/* <Sider width={220}>
           <Menu theme="dark" mode="inline" selectedKeys={[pathname.slice(1)]}>
             <Menu.Item key="dpos">
               <Link to="/dpos">Validators</Link>
             </Menu.Item>
-            {/* <Menu.Item key="govern">
-                <Link to="/govern">Govern</Link>
-            </Menu.Item> */}
             <Menu.Item key="reward">
               <Link to="/reward">Reward</Link>
             </Menu.Item>
@@ -86,11 +86,11 @@ class App extends React.Component {
               <Setting visible={showSetting} onClose={this.toggleSetting} />
             </div>
           </Menu>
-        </Sider>
-        <Layout>
+        </Sider> */}
+        {/* <Layout> */}
           <Content>{children}</Content>
-          <Footer style={{ textAlign: 'center' }}>SGN © 2019-2020 Celer Network</Footer>
-        </Layout>
+          {/* <Footer style={{ textAlign: 'center' }}>SGN © 2019-2020 Celer Network</Footer> */}
+        {/* </Layout> */}
       </Layout>
     );
   }

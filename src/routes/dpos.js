@@ -5,15 +5,24 @@ import { drizzleConnect } from '@drizzle/react-plugin';
 import { Card } from 'antd';
 
 import CandidateTable from '../components/dpos/candidate-table';
-
+import CandidateTotal from "../components/dpos/candidate-total";
 class DPoS extends React.Component {
   render() {
     const { DPoS } = this.props;
-
     return (
-      <Card title="Validators">
-        <CandidateTable candidates={_.values(DPoS.getCandidateInfo)} />
-      </Card>
+      <div className="container" style={{
+        margin: "0 3.5rem"
+      }}>
+        <Card title="Network Overview" style={{borderRadius: "1rem"}}> 
+          <CandidateTotal candidates={_.values(DPoS.getCandidateInfo)} />
+        </Card>
+        <Card title="All Validators" extra="Become a Validator" style={{
+          marginTop: "1.5rem",
+          borderRadius: "1rem"
+        }}> 
+          <CandidateTable candidates={_.values(DPoS.getCandidateInfo)} />
+        </Card>
+      </div>
     );
   }
 }
