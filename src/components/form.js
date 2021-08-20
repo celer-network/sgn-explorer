@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import { Button, DatePicker, Form, Input, InputNumber } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, DatePicker, Input, InputNumber } from 'antd';
 
 import Select from './select';
 

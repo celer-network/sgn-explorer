@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { drizzleConnect } from '@drizzle/react-plugin';
 import { withRouter, Link } from 'dva/router';
 import { Layout, Menu, Button } from 'antd';
-import { LinkOutlined } from '@ant-design/icons';
+import { LinkOutlined, SettingOutlined } from '@ant-design/icons';
 
 import Setting from './components/setting';
 import { subscribeEvent, subscribeChainInfo } from './utils/subscribe';
@@ -82,7 +82,7 @@ class App extends React.Component {
               </a>
             </Menu.Item>
             <div className="setting">
-              <Button type="primary" icon="setting" title="Setting" onClick={this.toggleSetting} />
+              <Button type="primary" icon={<SettingOutlined />} title="Setting" onClick={this.toggleSetting} />
               <Setting visible={showSetting} onClose={this.toggleSetting} />
             </div>
           </Menu>
