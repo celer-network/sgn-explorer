@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { drizzleConnect } from '@drizzle/react-plugin';
+import { AuditOutlined, CheckSquareOutlined } from '@ant-design/icons';
 import { Button, Card, List, Statistic, Row, Col, Dropdown, Menu } from 'antd';
 
 import Filter from '../components/filter';
@@ -68,14 +69,14 @@ class Govern extends React.Component {
         <Card
           actions={[
             <Dropdown overlay={menu}>
-              <Button type="link" title="Vote" icon="audit" size="small">
+              <Button type="link" title="Vote" icon={<AuditOutlined />} size="small">
                 Vote
               </Button>
             </Dropdown>,
             <Button
               type="link"
               title="Vote"
-              icon="check-square"
+              icon={<CheckSquareOutlined />}
               size="small"
               onClick={() => this.confirmParamProposal(proposalId)}
             >
