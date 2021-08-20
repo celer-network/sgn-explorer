@@ -80,7 +80,7 @@ class DelegateForm extends React.Component {
     ];
 
     return (
-      <Modal title="Delegate Stake" visible={visible} onOk={this.onSubmit} onCancel={onClose}>
+      <Modal title="Delegate" visible={visible} onOk={this.onSubmit} onCancel={onClose}>
         <Spin spinning={this.state.approving} tip="Approving CELR token...">
           <Form ref={this.form} items={formItems} />
         </Spin>

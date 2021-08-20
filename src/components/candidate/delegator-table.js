@@ -9,7 +9,7 @@ import { formatCelrValue } from '../../utils/unit';
 
 const columns = [
   {
-    title: 'Delegator',
+    title: 'address',
     dataIndex: 'delegatorAddr'
   },
   {

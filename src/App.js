@@ -45,7 +45,7 @@ class App extends React.Component {
     const { showSetting } = this.state;
     const { children, location, accounts } = this.props;
     const { pathname } = location;
-    console.log(location, accounts);
+
     return (
       <Layout>
         <Header location={location} accounts={accounts}/>
@@ -88,7 +88,7 @@ class App extends React.Component {
           </Menu>
         </Sider> */}
         {/* <Layout> */}
-          <Content>{children}</Content>
+        <Content style={{ margin: "0 3.5rem" }}>{children}</Content>
           {/* <Footer style={{ textAlign: 'center' }}>SGN © 2019-2020 Celer Network</Footer> */}
         {/* </Layout> */}
       </Layout>

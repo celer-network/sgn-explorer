@@ -1,5 +1,6 @@
 import React from "react";
 import { formatCelrValue } from '../../utils/unit';
+import { Statistic, Row, Col } from 'antd';
 
 function getCandidateTotal(candidates) {
   if(candidates && candidates.length > 0) {
@@ -19,20 +20,21 @@ const CandidateTotal = (props) => {
     const totalValidators = candidates.length;
     const totalStake = getCandidateTotal(candidates);
     return (
-        <div style={{
-            width: "100%",
-            height: "3rem",
-            display: "flex",
-        }}>
-            <div style={{ flex: 1 }}>
-                <div>Total Validators</div>
-                <div>{totalValidators}</div>
-            </div>
-            <div style={{ flex: 1}}>
-                <div>Total Stake</div>
-                <div>{totalStake} Celr</div>
-            </div>
-        </div>
+        <Row style={{ marginTop: '10px' }}>
+          <Col span={12}>
+            <Statistic
+              title="Total Validators"
+              value={totalValidators}
+            />
+          </Col>
+          <Col span={12}>
+            <Statistic
+              title="Total Stake"
+              value={totalStake}
+              suffix="Celr"
+            />
+          </Col>
+        </Row>
     )
 }
 

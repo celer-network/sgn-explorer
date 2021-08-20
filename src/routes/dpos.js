@@ -10,9 +10,7 @@ class DPoS extends React.Component {
   render() {
     const { DPoS } = this.props;
     return (
-      <div className="container" style={{
-        margin: "0 3.5rem"
-      }}>
+      <>
         <Card title="Network Overview" style={{borderRadius: "1rem"}}> 
           <CandidateTotal candidates={_.values(DPoS.getCandidateInfo)} />
         </Card>
@@ -22,7 +20,7 @@ class DPoS extends React.Component {
         }}> 
           <CandidateTable candidates={_.values(DPoS.getCandidateInfo)} />
         </Card>
-      </div>
+      </>
     );
   }
 }
