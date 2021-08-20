@@ -31,13 +31,14 @@ class DelegatorTable extends React.Component {
 
     const {
       candidateId,
-      network: { setting }
+      // network: { setting }
     } = props;
     this.state = {};
-
+    const setting = {gateway: "https://sgntest.celer.network/gateway"};
     axios
       .get(`${setting.gateway}/validator/candidate-delegators/${candidateId}`)
       .then((res) => {
+        console.log({result: res});
         const delegators = res.data.result.map((delegator) => ({
           candidateAddr: delegator.candidate_addr,
           delegatedStake: delegator.delegated_stake,
@@ -61,6 +62,7 @@ class DelegatorTable extends React.Component {
 
   render() {
     const { delegators } = this.state;
+    console.log({delegators});
     return (
       <Row>
         <Col span={24}>

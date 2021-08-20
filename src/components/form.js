@@ -46,7 +46,7 @@ class CustomizeForm extends React.Component {
 
   renderFormItems = () => {
     const { form, formItemLayout, items } = this.props;
-    const { getFieldDecorator } = form;
+    // const { getFieldDecorator } = form;
 
     return _.map(items, item => {
       const {
@@ -81,11 +81,10 @@ class CustomizeForm extends React.Component {
           key={name}
           {...formItemLayout}
           label={!label ? _.capitalize(name) : label}
+          name={name}
+          {...decoratorOptions}
         >
-          {getFieldDecorator(
-            name,
-            decoratorOptions
-          )(<Field {...fieldOptions} />)}
+          <Field {...fieldOptions} />
         </FormItem>
       );
     });
@@ -114,10 +113,12 @@ CustomizeForm.defaultProps = {
   submitText: 'Save'
 };
 
-export default Form.create({
-  onValuesChange(props, changedValues) {
-    if (props.onValuesChange) {
-      props.onValuesChange(changedValues);
-    }
-  }
-})(CustomizeForm);
+export default CustomizeForm;
+
+// export default Form.create({
+//   onValuesChange(props, changedValues) {
+//     if (props.onValuesChange) {
+//       props.onValuesChange(changedValues);
+//     }
+//   }
+// })(CustomizeForm);
