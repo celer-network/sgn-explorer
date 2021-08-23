@@ -16,37 +16,89 @@
   "dependencies": {
     "@ant-design/compatible": "^1.0.8",
     "@ant-design/icons": "^4.3.0",
+    "@babel/core": "7.9.0",
     "@drizzle/react-components": "^1.5.3",
     "@drizzle/react-plugin": "^1.5.3",
     "@drizzle/store": "^1.5.3",
+    "@svgr/webpack": "4.3.3",
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
     "antd": "^4.16.12",
     "axios": "^0.19.0",
+    "babel-eslint": "10.1.0",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "8.1.0",
+    "babel-plugin-named-asset-import": "^0.3.6",
+    "babel-preset-react-app": "^9.1.2",
     "bech32": "^1.1.4",
     "browserslist": "^4.14.6",
+    "camelcase": "^5.3.1",
+    "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "css-loader": "3.4.2",
+    "dotenv": "8.2.0",
+    "dotenv-expand": "5.1.0",
     "dva": "^2.4.1",
     "dva-loading": "^3.0.11",
+    "eslint": "^6.6.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-loader": "3.0.3",
+    "eslint-plugin-flowtype": "4.6.0",
+    "eslint-plugin-import": "2.20.1",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-react": "7.19.0",
+    "eslint-plugin-react-hooks": "^1.6.1",
+    "file-loader": "4.3.0",
+    "fs-extra": "^8.1.0",
+    "html-webpack-plugin": "4.0.0-beta.11",
+    "identity-obj-proxy": "3.0.0",
+    "jest": "24.9.0",
+    "jest-environment-jsdom-fourteen": "1.0.1",
+    "jest-resolve": "24.9.0",
+    "jest-watch-typeahead": "0.4.2",
+    "less": "^4.1.1",
+    "less-loader": "^6.0.0",
     "lodash": "^4.17.14",
+    "mini-css-extract-plugin": "0.9.0",
     "moment": "^2.26.0",
+    "optimize-css-assets-webpack-plugin": "5.0.3",
+    "pnp-webpack-plugin": "1.6.4",
+    "postcss-flexbugs-fixes": "4.1.0",
+    "postcss-loader": "3.0.0",
+    "postcss-normalize": "8.0.1",
+    "postcss-preset-env": "6.7.0",
+    "postcss-safe-parser": "4.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-app-polyfill": "^1.0.6",
+    "react-dev-utils": "^10.2.1",
     "react-dom": "^16.8.6",
     "react-intl": "^2.9.0",
-    "web3": "1.2.1"
+    "resolve": "1.15.0",
+    "resolve-url-loader": "3.1.2",
+    "sass-loader": "8.0.2",
+    "semver": "6.3.0",
+    "style-loader": "0.23.1",
+    "terser-webpack-plugin": "2.3.8",
+    "ts-pnp": "1.1.6",
+    "url-loader": "2.3.0",
+    "web3": "1.2.1",
+    "webpack": "4.42.0",
+    "webpack-dev-server": "3.11.0",
+    "webpack-manifest-plugin": "2.2.0",
+    "workbox-webpack-plugin": "4.3.1"
   },
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.1",
-    "gh-pages": "^2.1.1",
-    "react-scripts": "^3.0.1"
+    "gh-pages": "^2.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "eject": "react-scripts eject",
-    "build:ropsten": "rm -rf build-ropsten && REACT_APP_NETWORK_ID=3 react-scripts build && mv build build-ropsten",
-    "build:mainnet": "rm -rf build-mainnet && REACT_APP_NETWORK_ID=1 react-scripts build && mv build build-mainnet",
+    "start": "node scripts/start.js",
+    "build:ropsten": "rm -rf build-ropsten && REACT_APP_NETWORK_ID=3 node scripts/build.js && mv build build-ropsten",
+    "build:mainnet": "rm -rf build-mainnet && REACT_APP_NETWORK_ID=1 node scripts/build.js && mv build build-mainnet",
     "cleanup-gh-pages": "rm -rf node_modules/gh-pages/.cache",
     "deploy:ropsten": "npm run cleanup-gh-pages && gh-pages -b deploy-ropsten -d build-ropsten --message \"[skip ci] Update ropsten deployment\"",
     "deploy:mainnet": "npm run cleanup-gh-pages && gh-pages -b deploy-mainnet -d build-mainnet --message \"[skip ci] Update mainnet deployment\"",
-    "test": "react-scripts test --env=jsdom",
+    "test": "node scripts/test.js --env=jsdom",
     "lint": "eslint src --ignore-path .gitignore",
     "lint-fix": "eslint src --fix --ignore-path .gitignore"
   },
@@ -55,5 +107,61 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jest-environment-jsdom-fourteen",
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "modulePaths": [],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  }
 }
