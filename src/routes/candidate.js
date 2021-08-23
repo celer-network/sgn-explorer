@@ -6,6 +6,7 @@ import bech32 from 'bech32';
 import web3 from 'web3';
 import axios from 'axios';
 import { Button, Card, Skeleton, Statistic, Row, Col, Tabs, message, PageHeader } from 'antd';
+import { CopyOutlined } from '@ant-design/icons';
 
 import DelegateForm from '../components/candidate/delegate-form';
 import WithdrawForm from '../components/candidate/withdraw-form';
@@ -15,7 +16,7 @@ import SlashTable from '../components/candidate/slash-table';
 import { formatCelrValue } from '../utils/unit';
 import { CANDIDATE_STATUS } from '../utils/dpos';
 import { RATE_BASE } from '../utils/constant';
-import { getSimple } from "../utils/utils";
+import { getSimple, copyToClip } from "../utils/utils";
 
 import "./candidate.less";
 
@@ -244,11 +245,11 @@ class Candidate extends React.Component {
           </Col>
         </Row>
         <Row style={{ padding: '24px', borderTop: "1px solid #ECEBEE" }}>
-          <Col span={4}>
-            <Statistic title="Address" value={getSimple(candidateId, 8, -6)} />
+          <Col span={4} onClick={() => copyToClip(candidateId)}>
+            <Statistic title="Address" suffix={<CopyOutlined/>} value={getSimple(candidateId, 8, -6)} />
           </Col>
-          <Col span={4}>
-            <Statistic title="Sidechain Address" value={getSimple(sidechainAddr, 8, -6)} />
+          <Col span={4} onClick={() => copyToClip(sidechainAddr)}>
+            <Statistic title="Sidechain Address" suffix={<CopyOutlined/>} value={getSimple(sidechainAddr, 8, -6)} />
           </Col>
           <Col span={4}>
             <Statistic title="Commission Rate" value={`${commissionRate / RATE_BASE} %`} />
