@@ -5,7 +5,7 @@ import { drizzleConnect } from '@drizzle/react-plugin';
 import bech32 from 'bech32';
 import web3 from 'web3';
 import axios from 'axios';
-import { Button, Card, Skeleton, Statistic, Row, Col, Tabs, message } from 'antd';
+import { Button, Card, Skeleton, Statistic, Row, Col, Tabs, message, PageHeader } from 'antd';
 
 import DelegateForm from '../components/candidate/delegate-form';
 import WithdrawForm from '../components/candidate/withdraw-form';
@@ -15,6 +15,28 @@ import SlashTable from '../components/candidate/slash-table';
 import { formatCelrValue } from '../utils/unit';
 import { CANDIDATE_STATUS } from '../utils/dpos';
 import { RATE_BASE } from '../utils/constant';
+import { getSimple } from "../utils/utils";
+
+import "./candidate.less";
+
+// function jsonp(obj) {
+//   var {url, params, callback} = obj;
+//   debugger;
+//   return new Promise((resolve, reject) => {
+//     let script = document.createElement('script');
+//     window[callback] = function(data) {
+//       resolve(data);
+//       document.body.removeChild(script);
+//     }
+//     params = {...params, callback};
+//     let arrs = [];
+//     for(let key in params) {
+//       arrs.push(`${key}=${params[key]}`)
+//     }
+//     script.src=`${url}?${arrs.join('&')}`;
+//     document.body.appendChild(script);
+//   })
+// }
 
 class Candidate extends React.Component {
   constructor(props, context) {
@@ -80,6 +102,20 @@ class Candidate extends React.Component {
       });
   }
 
+  componentDidMount() {
+    // window.getData = function(data) {
+    //   console.log(data);
+    // }
+    // jsonp({
+    //   url: "https://cbridge-stat.s3.us-west-2.amazonaws.com/mainnet/cbridge-stat.json",
+    //   callback: "getData"
+    // }).then(() => {
+    //   console.log("success")
+    // }).catch((e) => {
+    //   console.log(e);
+    // });
+  }
+
   static getDerivedStateFromProps(props) {
     const { match, DPoS = {} } = props;
     const candidateId = match.params.id;
@@ -131,33 +167,32 @@ class Candidate extends React.Component {
 
     // TODO: Calculate actual withdraw amount
     const delegatorInfo = _.values(DPoS.getDelegatorInfo)[0];
+    const delegatedStake = (delegatorInfo && delegatorInfo.value.delegatedStake) || '0';
     const undelegatingStake = (delegatorInfo && delegatorInfo.value.undelegatingStake) || '0';
-
     const isOwner = accounts[0] === candidate.args[0];
 
     return (
-      <div>
-        <Button type="primary" onClick={this.toggleDelegateModal}>
-          Delegate
-        </Button>
-        {status === '0' ? (
-          <Button type="primary" onClick={this.toggleWithdrawModal}>
-            Withdraw
+      <>
+        {delegatedStake !== "0" ? (
+          <Button type="primary" className="extra-button btn-stake" onClick={this.toggleDelegateModal}>
+            Stake
           </Button>
-        ) : (
-          [
-            <Button type="primary" onClick={this.toggleWithdrawModal}>
-              Initialize Withdraw
-            </Button>,
-            <Button
-              type="primary"
-              onClick={this.confirmWithdraw}
-              disabled={undelegatingStake === '0'}
-            >
-              Confirm Withdraw
-            </Button>
-          ]
-        )}
+        ) : ([
+          <Button type="primary" className="extra-button btn-stake" onClick={this.toggleDelegateModal}>
+            Stake More
+          </Button>,
+          <Button type="primary" className="extra-button btn-unbond" onClick={this.toggleWithdrawModal}>
+            Unbond
+          </Button>,
+          <Button
+            type="primary"
+            className="extra-button btn-withdraw" 
+            onClick={this.confirmWithdraw}
+            disabled={undelegatingStake === '0'}
+          >
+            withdraw
+          </Button>
+        ])}
         {isOwner && [
           <Button type="primary" onClick={this.toggleCommissionModal}>
             Announce Increase Commission Rate
@@ -169,15 +204,21 @@ class Candidate extends React.Component {
             Claim Validator
           </Button>
         ]}
-      </div>
+      </>
     );
   };
 
   renderCandidateDetail = () => {
-    const { SGN } = this.props;
+    const { SGN, DPoS = {} } = this.props;
     const { candidate, slashes, description = {} } = this.state;
     const candidateId = candidate.args[0];
     const { minSelfStake, stakingPool, status, commissionRate, rateLockEndTime } = candidate.value;
+
+    const delegatorInfo = _.values(DPoS.getDelegatorInfo)[0];
+    const delegatedStake = (delegatorInfo && delegatorInfo.value.delegatedStake) || '0';
+    const undelegatingStake = (delegatorInfo && delegatorInfo.value.undelegatingStake) || '0';
+    const WithdrawableStake = '0';
+
     const sidechainHexAddr = _.chain(SGN.sidechainAddrMap)
       .find((data) => data.args[0] === candidateId)
       .get('value', '')
@@ -187,34 +228,50 @@ class Candidate extends React.Component {
       bech32.encode('sgn', bech32.toWords(web3.utils.hexToBytes(sidechainHexAddr)));
 
     return (
+      <div className="candidateDetail">
+        <Row>
+          <Col span={6}>
+            <Statistic title="Staking Pool" value={formatCelrValue(stakingPool)} />
+          </Col>
+          <Col span={6}>
+            <Statistic title="Your Stake" value={formatCelrValue(delegatedStake)} />
+          </Col>
+          <Col span={6}>
+            <Statistic title="Unbonding Stake" value={formatCelrValue(undelegatingStake)} />
+          </Col>
+          <Col span={6}>
+            <Statistic title="Withdrawable" value={formatCelrValue(WithdrawableStake)} />
+          </Col>
+        </Row>
+        <Row style={{ padding: '24px', borderTop: "1px solid #ECEBEE" }}>
+          <Col span={4}>
+            <Statistic title="Address" value={getSimple(candidateId, 8, -6)} />
+          </Col>
+          <Col span={4}>
+            <Statistic title="Sidechain Address" value={getSimple(sidechainAddr, 8, -6)} />
+          </Col>
+          <Col span={4}>
+            <Statistic title="Commission Rate" value={`${commissionRate / RATE_BASE} %`} />
+          </Col>
+          <Col span={4}>
+            <Statistic title="Rate Lock End Time" value={`${rateLockEndTime} block height`} />
+          </Col>
+          <Col span={4}>
+            <Statistic title="Contact" value={description.security_contact || 'N/A'} />
+          </Col>
+          <Col span={4}>
+            <Statistic title="Website" value={description.website || 'N/A'} />
+          </Col>
+        </Row>
+      </div>
+    );
+  };
+
+  renderDelegatorsAndSlashes = () => {
+    const { candidate, slashes } = this.state;
+    const candidateId = candidate.args[0];
+    return (
       <Row style={{ marginTop: '10px' }}>
-        <Col span={12}>
-          <Statistic title="Address" value={candidateId} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Status" value={CANDIDATE_STATUS[status]} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Min Self Stake" value={formatCelrValue(minSelfStake)} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Staking Pool" value={formatCelrValue(stakingPool)} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Commission Rate" value={`${commissionRate / RATE_BASE} %`} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Rate Lock End Time" value={`${rateLockEndTime} block height`} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Website" value={description.website || 'N/A'} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Contact" value={description.security_contact || 'N/A'} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Sidechain Address" value={sidechainAddr} />
-        </Col>
         <Col span={24}>
           <Tabs>
             <Tabs.TabPane tab="Delegators" key="delegators">
@@ -226,8 +283,12 @@ class Candidate extends React.Component {
           </Tabs>
         </Col>
       </Row>
-    );
-  };
+    )
+  }
+
+  goBack = () => {
+    window.history.go(-1);
+  }
 
   render() {
     const {
@@ -243,24 +304,30 @@ class Candidate extends React.Component {
     }
 
     return (
-      <Card title="Candidate" extra={this.renderAction()}>
-        {this.renderCandidateDetail()}
-        <DelegateForm
-          candidateId={candidateId}
-          visible={isDelegateModalVisible}
-          onClose={this.toggleDelegateModal}
-        />
-        <WithdrawForm
-          candidate={candidate}
-          visible={isWithdrawModalVisible}
-          onClose={this.toggleWithdrawModal}
-        />
-        <CommissionForm
-          candidate={candidate}
-          visible={isCommissionModalVisible}
-          onClose={this.toggleCommissionModal}
-        />
-      </Card>
+      <>
+        <PageHeader title="Back to all validators"  onBack={this.goBack}/>
+        <Card title="Candidate" className="candidate-card" extra={this.renderAction()}>
+          {this.renderCandidateDetail()}
+          <DelegateForm
+            candidateId={candidateId}
+            visible={isDelegateModalVisible}
+            onClose={this.toggleDelegateModal}
+          />
+          <WithdrawForm
+            candidate={candidate}
+            visible={isWithdrawModalVisible}
+            onClose={this.toggleWithdrawModal}
+          />
+          <CommissionForm
+            candidate={candidate}
+            visible={isCommissionModalVisible}
+            onClose={this.toggleCommissionModal}
+          />
+        </Card>
+        <Card className="delegators-card">
+          {this.renderDelegatorsAndSlashes()}
+        </Card>
+      </>
     );
   }
 }

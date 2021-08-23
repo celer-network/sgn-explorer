@@ -60,7 +60,7 @@ class CandidateTable extends React.Component {
                 pathname: `/candidate/${text}`
               })
             );
-          }}>{getSimple(text)}</div>
+          }}>{getSimple(text, 6, -4)}</div>
         )
       },
       {

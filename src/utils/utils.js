@@ -1,5 +1,5 @@
-const getSimple = (address) => {
-    const result = address.slice(0,6) + '...' + address.slice(-4,address.length);
+const getSimple = (address, startIndex, endIndex) => {
+    const result = address.slice(0,startIndex) + '...' + address.slice(endIndex,address.length);
     return result;
 }
 

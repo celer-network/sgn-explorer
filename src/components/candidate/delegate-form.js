@@ -9,7 +9,7 @@ import { Modal, Spin, Form, InputNumber, Button, Row, Col, Statistic } from 'ant
 import { celrFieldOptions } from '../../utils/form';
 import { formatCelrValue } from '../../utils/unit';
 
-import "./delegate-form.scss";
+import "./delegate-form.less";
 
 class DelegateForm extends React.Component {
   constructor(props, context) {
@@ -70,19 +70,21 @@ class DelegateForm extends React.Component {
     console.log(maxValue, web3.utils.toWei(maxValue.toString(), 'ether'))
 
     return (
-      <Modal title="Delegate" width="25rem" visible={visible} onCancel={onClose} footer={null}>
+      <Modal title="Delegate" className="delegate-form" width="25rem" visible={visible} onCancel={onClose} footer={null}>
         <Spin spinning={this.state.approving} tip="Approving CELR token...">
           <Form ref={this.formRef} onFinish={this.onFinish} initialValues={{stateNum: 1}}>
-            <Form.Item name="stateNum" rules={[{
-              message: 'Please enter a value!',
-              required: true
-            }]}>
-              <InputNumber {...celrFieldOptions}/>
-            </Form.Item>
-            <div style={{width:"100%", height: "2.125rem",}} onClick={this.setMax}>
-              max
+            <div className="btn-group">
+              <Form.Item name="stateNum" rules={[{
+                message: 'Please enter a value!',
+                required: true
+              }]}>
+                <InputNumber {...celrFieldOptions}/>
+              </Form.Item>
+              <Button block onClick={this.setMax}>
+                max
+              </Button>
             </div>
-            <Row gutter={16}>
+            <Row gutter={16} className="delegate-info">
               <Col span={12}>
                 <Statistic title="MIN Stake Amount" value={1} />
               </Col>
@@ -92,7 +94,7 @@ class DelegateForm extends React.Component {
             </Row>
             <Form.Item>
               <Button type="primary" htmlType="submit" block style={{backgroundColor: "#2ED57B", color: "#000000", border: "1px solid #0AAD55", height: "3.625rem", fontSize:"1.125rem", borderRadius:"0.6rem", marginTop: "1.5rem"}}>
-                Submit
+                Delegate
               </Button>
             </Form.Item>
           </Form>

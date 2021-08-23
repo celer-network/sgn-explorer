@@ -31,7 +31,7 @@ const Header = (props) => {
                 </Menu>
             </div>
             <div className="header-right">
-                {getSimple(accounts[0])}
+                {getSimple(accounts[0], 6, -4)}
             </div>
         </header>
     )
