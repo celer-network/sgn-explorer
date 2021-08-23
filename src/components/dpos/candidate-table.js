@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { drizzleConnect } from '@drizzle/react-plugin';
@@ -11,75 +11,95 @@ import { formatCelrValue } from '../../utils/unit';
 import { RATE_BASE } from '../../utils/constant';
 import { getSimple } from '../../utils/utils';
 
-const columns = [
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    width: 200,
-    // sorter: (a, b) => a.address - b.address,
-    render: (text) => getSimple(text)
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    width: 200,
-    // filters: _.map(CANDIDATE_STATUS, (text, index) => ({
-    //   text,
-    //   value: index.toString()
-    // })),
-    // filterMultiple: false,
-    // onFilter: (value, record) => record.status === value,
-    // sorter: (a, b) => a.status - b.status,
-    render: (text) => CANDIDATE_STATUS[text]
-  },
-  {
-    title: 'Staking Pool',
-    dataIndex: 'stakingPool',
-    width: 300,
-    defaultSortOrder: 'descend',
-    sorter: (a, b) => {
-      return web3.utils.toBN(a.stakingPool).cmp(web3.utils.toBN(b.stakingPool));
-    },
-    render: (text) => formatCelrValue(text)
-  },
-  {
-    title: 'Commission',
-    dataIndex: 'commissionRate',
-    sorter: (a, b) => a.commissionRate - b.commissionRate,
-    render: (text) => `${text / RATE_BASE} %`
-  },
-  {
-    title: ' ',
-    dataIndex: 'delegate',
-    width: 100,
-    render: (text) => <Button style={{textAlign: "right"}}>Delegate</Button>
-  }
-];
+import DelegateForm from '../candidate/delegate-form';
 
-class CandidateTable extends React.Component {
-  onRow = (record) => {
-    const { dispatch } = this.props;
+const DelegateModal = (props) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const {candidateId} = props;
 
-    return {
-      onClick: () => {
-        dispatch(
-          routerRedux.push({
-            pathname: `/candidate/${record.address}`
-          })
-        );
-      }
-    };
+  const showModal = (event) => {
+    setIsModalVisible(true);
+    event.stopPropagation();
   };
 
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  return (
+    <>
+      <Button type="primary" onClick={showModal}>
+        Delegate
+      </Button>
+      <DelegateForm
+        candidateId={candidateId}
+        visible={isModalVisible}
+        onClose={handleCancel}
+      />
+    </>
+  )
+}
+
+class CandidateTable extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    const { candidates } = this.props;
+    const { candidates, accountBalances, dispatch } = this.props;
+    const columns = [
+      {
+        title: 'Address',
+        dataIndex: 'address',
+        width: 200,
+        render: (text) => (
+          <div onClick={() => {
+            dispatch(
+              routerRedux.push({
+                pathname: `/candidate/${text}`
+              })
+            );
+          }}>{getSimple(text)}</div>
+        )
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        width: 200,
+        render: (text) => CANDIDATE_STATUS[text]
+      },
+      {
+        title: 'Staking Pool',
+        dataIndex: 'stakingPool',
+        width: 300,
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => {
+          return web3.utils.toBN(a.stakingPool).cmp(web3.utils.toBN(b.stakingPool));
+        },
+        render: (text) => formatCelrValue(text)
+      },
+      {
+        title: 'Commission',
+        dataIndex: 'commissionRate',
+        sorter: (a, b) => a.commissionRate - b.commissionRate,
+        render: (text) => `${text / RATE_BASE} %`
+      },
+      {
+        title: ' ',
+        dataIndex: 'delegate',
+        width: 100,
+        render: (text) => <DelegateModal candidateId={text} accountBalances={accountBalances}/>
+      }
+    ];
     const dataSource = candidates.map((candidate) => ({
       ...candidate.value,
-      address: candidate.args[0]
+      address: candidate.args[0],
+      candidateId: candidate.args[0],
     }));
 
     return (
-      <Table dataSource={dataSource} columns={columns} pagination={false} onRow={this.onRow} />
+      <Table dataSource={dataSource} columns={columns} pagination={false}/>
     );
   }
 }
@@ -90,7 +110,10 @@ CandidateTable.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return {};
+  const { accountBalances, } = state;
+  return {
+    accountBalances,
+  };
 }
 
 export default drizzleConnect(CandidateTable, mapStateToProps);
