@@ -19,26 +19,6 @@ import { RATE_BASE } from '../utils/constant';
 import { getSimple, copyToClip } from "../utils/utils";
 
 import "./candidate.less";
-
-// function jsonp(obj) {
-//   var {url, params, callback} = obj;
-//   debugger;
-//   return new Promise((resolve, reject) => {
-//     let script = document.createElement('script');
-//     window[callback] = function(data) {
-//       resolve(data);
-//       document.body.removeChild(script);
-//     }
-//     params = {...params, callback};
-//     let arrs = [];
-//     for(let key in params) {
-//       arrs.push(`${key}=${params[key]}`)
-//     }
-//     script.src=`${url}?${arrs.join('&')}`;
-//     document.body.appendChild(script);
-//   })
-// }
-
 class Candidate extends React.Component {
   constructor(props, context) {
     super(props);
@@ -101,20 +81,6 @@ class Candidate extends React.Component {
 
         message.warning('Please config gateway url in setting to load sidechain info correctly');
       });
-  }
-
-  componentDidMount() {
-    // window.getData = function(data) {
-    //   console.log(data);
-    // }
-    // jsonp({
-    //   url: "https://cbridge-stat.s3.us-west-2.amazonaws.com/mainnet/cbridge-stat.json",
-    //   callback: "getData"
-    // }).then(() => {
-    //   console.log("success")
-    // }).catch((e) => {
-    //   console.log(e);
-    // });
   }
 
   static getDerivedStateFromProps(props) {

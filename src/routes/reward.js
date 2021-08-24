@@ -6,6 +6,7 @@ import { Skeleton, Card, Statistic, Row, Col, Button, message } from 'antd';
 import axios from 'axios';
 
 import { formatCelrValue } from '../utils/unit';
+import MyDelegations from "../components/reward/myDelegations";
 
 const INIT_ACTION = 'init';
 const WAIT_ACTION = 'wait';
@@ -139,40 +140,44 @@ class Reward extends React.Component {
     const { miningReward, serviceReward } = this.state;
     const { redeemedMiningReward } = DPoS;
     const { redeemedServiceReward } = SGN;
+    const candidates=_.values(DPoS.getCandidateInfo);
 
     if (_.isEmpty(redeemedServiceReward) || _.isEmpty(redeemedMiningReward)) {
       return <Skeleton />;
     }
 
     return (
-      <Card title="Reward" actions={this.renderActions()}>
-        <Row style={{ marginTop: '10px' }}>
-          <Col span={12}>
-            <Statistic
-              title="Cumulative Mining Reward"
-              value={formatCelrValue(miningReward, true)}
-            />
-          </Col>
-          <Col span={12}>
-            <Statistic
-              title="Cumulative Service Reward"
-              value={formatCelrValue(serviceReward, true)}
-            />
-          </Col>
-          <Col span={12}>
-            <Statistic
-              title="Redeemed Mining Reward"
-              value={formatCelrValue(_.values(redeemedMiningReward)[0].value, true)}
-            />
-          </Col>
-          <Col span={12}>
-            <Statistic
-              title="Redeemed Service Reward"
-              value={formatCelrValue(_.values(redeemedServiceReward)[0].value, true)}
-            />
-          </Col>
-        </Row>
-      </Card>
+      <>
+        <Card title="Reward" actions={this.renderActions()}>
+          <Row style={{ marginTop: '10px' }}>
+            <Col span={12}>
+              <Statistic
+                title="Cumulative Mining Reward"
+                value={formatCelrValue(miningReward, true)}
+              />
+            </Col>
+            <Col span={12}>
+              <Statistic
+                title="Cumulative Service Reward"
+                value={formatCelrValue(serviceReward, true)}
+              />
+            </Col>
+            <Col span={12}>
+              <Statistic
+                title="Redeemed Mining Reward"
+                value={formatCelrValue(_.values(redeemedMiningReward)[0].value, true)}
+              />
+            </Col>
+            <Col span={12}>
+              <Statistic
+                title="Redeemed Service Reward"
+                value={formatCelrValue(_.values(redeemedServiceReward)[0].value, true)}
+              />
+            </Col>
+          </Row>
+        </Card>
+        <MyDelegations candidates={candidates}/>
+      </>
     );
   }
 }
