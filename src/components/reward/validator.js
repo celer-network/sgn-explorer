@@ -11,20 +11,27 @@ class Validator extends React.Component {
     constructor(props, context) {
         super(props);
         this.contracts = context.drizzle.contracts;
-        const candidateId = this.props.candidateId;
-        this.contracts.DPoS.methods.getDelegatorInfo.cacheCall(
-            candidateId,
-            window.ethereum.selectedAddress
-        );
+        this.state = {
+            delegator: null
+        }
+    }
+    componentDidMount() {
+        const { candidateId, accounts } = this.props;
+        this.contracts.DPoS.methods.getDelegatorInfo(candidateId, accounts[0])
+        .call((err, delegator) => {
+            this.setState({
+                delegator
+            });
+        });
     }
     render() {
         const {stakeMethod, unBondMethod, DPoS, candidateId} = this.props;
-        const delegatorInfo = _.values(DPoS.getDelegatorInfo)[0];
+        const delegatorInfo = this.state.delegator;
         const candidates = _.values(DPoS.getCandidateInfo);
         const candidate = _.find(candidates, (candidate) => candidate.args[0] === candidateId);
         const { commissionRate } = candidate.value;
-        const delegatedStake = (delegatorInfo && delegatorInfo.value.delegatedStake) || '0';
-        const undelegatingStake = (delegatorInfo && delegatorInfo.value.undelegatingStake) || '0';
+        const delegatedStake = (delegatorInfo && delegatorInfo.delegatedStake) || '0';
+        const undelegatingStake = (delegatorInfo && delegatorInfo.undelegatingStake) || '0';
         if(delegatedStake === "0") {
             return null;
         }
