@@ -24,6 +24,10 @@ class Validator extends React.Component {
             });
         });
     }
+    confirmWithdraw = () => {
+        const { candidateId } = this.props;
+        this.contracts.DPoS.methods.confirmWithdraw.cacheSend(candidateId);
+    };
     render() {
         const {stakeMethod, unBondMethod, DPoS, candidateId} = this.props;
         const delegatorInfo = this.state.delegator;
@@ -80,8 +84,8 @@ class Validator extends React.Component {
                                 block
                                 type="primary"
                                 className="extra-button btn-withdraw" 
-                                // onClick={this.confirmWithdraw}
-                                // disabled={undelegatingStake === '0'}
+                                onClick={this.confirmWithdraw}
+                                disabled={undelegatingStake === '0'}
                             >
                                 withdraw
                             </Button>
