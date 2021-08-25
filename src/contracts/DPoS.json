@@ -2062,29 +2062,14 @@
           }
         ],
         "contractDependencies": [
-          3670,
-          5392,
-          5528,
-          5824,
-          5927,
-          6036,
-          6200,
-          6437
+          3670, 5392, 5528, 5824, 5927, 6036, 6200, 6437
         ],
         "contractKind": "contract",
         "documentation": "@title A DPoS contract shared by every sidechain\n@notice This contract holds the basic logic of DPoS in Celer's coherent sidechain system",
         "fullyImplemented": true,
         "id": 2604,
         "linearizedBaseContracts": [
-          2604,
-          3670,
-          6036,
-          5927,
-          6200,
-          6437,
-          5528,
-          5824,
-          5392
+          2604, 3670, 6036, 5927, 6200, 6437, 5528, 5824, 5392
         ],
         "name": "DPoS",
         "nodeType": "ContractDefinition",
@@ -36134,29 +36119,14 @@
           }
         ],
         "contractDependencies": [
-          3670,
-          5392,
-          5528,
-          5824,
-          5927,
-          6036,
-          6200,
-          6437
+          3670, 5392, 5528, 5824, 5927, 6036, 6200, 6437
         ],
         "contractKind": "contract",
         "documentation": "@title A DPoS contract shared by every sidechain\n@notice This contract holds the basic logic of DPoS in Celer's coherent sidechain system",
         "fullyImplemented": true,
         "id": 2604,
         "linearizedBaseContracts": [
-          2604,
-          3670,
-          6036,
-          5927,
-          6200,
-          6437,
-          5528,
-          5824,
-          5392
+          2604, 3670, 6036, 5927, 6200, 6437, 5528, 5824, 5392
         ],
         "name": "DPoS",
         "nodeType": "ContractDefinition",
@@ -71213,8 +71183,8 @@
         }
       },
       "links": {},
-      "address": "0x92d1f7266464b6a22f0e0749a310bf97b168e7e0",
-      "transactionHash": "0x54a55da65f62e618459c8579c9b0d3d1253a465787b8f3de5d521b28ca1db506"
+      "address": "0xBC31fA28E01CAB33a9bcD7b30A7C6291479e47c4",
+      "transactionHash": "0x2683d74c4d7a9bd03943a855e301cb517a31958fdbb6535486582f6833ab306d"
     }
   },
   "schemaVersion": "3.2.3",
