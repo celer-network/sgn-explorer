@@ -1,11 +1,12 @@
 import React from "react";
-import { Skeleton, Card, Statistic, Row, Col, Button, message } from 'antd';
+import { Skeleton, Card, Statistic, Row, Col, Button, message, Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { drizzleConnect } from '@drizzle/react-plugin';
 import { RATE_BASE } from '../../utils/constant';
 import { formatCelrValue } from "../../utils/unit";
-import "./myDelegations.less";
+import "./validator.less";
 
 class Validator extends React.Component {
     constructor(props, context) {
@@ -43,11 +44,14 @@ class Validator extends React.Component {
             <Col span={8} className="block-col">
                 <Card className="validator-card">
                     <Row>
-                        <Col span={12}>
-                            rate: {`${commissionRate / RATE_BASE} %`}
-                        </Col>
-                        <Col span={12}>
-                            id: {candidateId}
+                        <Col span={24}>
+                            <div className="avatar">
+                                <Avatar size={56} icon={<UserOutlined />} />
+                                <div className="avatar-info">
+                                    <div>{candidateId}</div>
+                                    <div>{`${commissionRate / RATE_BASE} %`}</div>
+                                </div>
+                            </div>
                         </Col>
                         <Col span={6}>
                             Your Stake
