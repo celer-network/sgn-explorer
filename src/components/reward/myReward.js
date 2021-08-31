@@ -5,9 +5,13 @@ import { drizzleConnect } from '@drizzle/react-plugin';
 import { Skeleton, Card, Statistic, Row, Col, Button, message } from 'antd';
 import axios from 'axios';
 import { ArrowDownOutlined } from "@ant-design/icons";
+import web3 from 'web3';
 import { formatCelrValue } from '../../utils/unit';
 import ClaimForm from "./claim-form";
+import protobuf from "protobufjs";
 import "./myReward.less";
+
+const util = protobuf.util;
 
 const INIT_ACTION = 'init';
 const WAIT_ACTION = 'wait';
@@ -41,6 +45,19 @@ class MyReward extends React.Component {
         .get(`/validator/reward/${this.currentUser}`)
         .then((res) => {
             const { result } = res.data;
+            const {reward_proto_bytes} = result;
+            protobuf.load("sgn.proto").then((root) => {
+                let message=root.lookupType('sgn.Reward');
+                const buffer = util.newBuffer(util.base64.length(reward_proto_bytes));
+                util.base64.decode(reward_proto_bytes, buffer, 0);
+                const cumulativeMiningReward = message.decode(buffer).cumulativeMiningReward;
+                const bn_cumulativeMiningReward = web3.utils.toBN(web3.utils.bytesToHex(cumulativeMiningReward));
+                const s_cumulativeMiningReward = bn_cumulativeMiningReward.toString();
+                const celer_ = formatCelrValue(s_cumulativeMiningReward);
+                console.log(celer_);
+            }).catch((err) => {
+                throw err;
+            })
             this.setState({
                 miningReward: result.mining_reward,
                 serviceReward: result.service_reward
@@ -125,6 +142,13 @@ class MyReward extends React.Component {
             console.error(err);
         });
     };
+
+    initRewardStatus = () => {
+        this.setState({
+            action: INIT_ACTION,
+            visible: false
+        });
+    }
     
     render() {
         const { DPoS, SGN } = this.props;
@@ -184,6 +208,7 @@ class MyReward extends React.Component {
                     toggleClaimForm={this.toggleClaimForm}
                     intendWithdraw={this.intendWithdraw}
                     redeemReward={this.redeemReward}
+                    initRewardStatus={this.initRewardStatus}
                 />
             </Card>
           )

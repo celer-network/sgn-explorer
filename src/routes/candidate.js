@@ -7,9 +7,7 @@ import web3 from 'web3';
 import axios from 'axios';
 import { Button, Card, Skeleton, Statistic, Row, Col, Tabs, message, PageHeader } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
-
-import DelegateForm from '../components/candidate/delegate-form';
-import WithdrawForm from '../components/candidate/withdraw-form';
+import TransForm from '../components/form-component';
 import CommissionForm from '../components/candidate/commission-form';
 import DelegatorTable from '../components/candidate/delegator-table';
 import SlashTable from '../components/candidate/slash-table';
@@ -17,6 +15,7 @@ import { formatCelrValue } from '../utils/unit';
 import { CANDIDATE_STATUS } from '../utils/dpos';
 import { RATE_BASE } from '../utils/constant';
 import { getSimple, copyToClip } from "../utils/utils";
+import {STAKE_TYPE, UNBOND_TYPE, WITHDRAW_TYPE} from "../constant";
 
 import "./candidate.less";
 class Candidate extends React.Component {
@@ -27,9 +26,9 @@ class Candidate extends React.Component {
     this.state = {
       candidate: null,
       slashes: [],
-      isDelegateModalVisible: false,
-      isWithdrawModalVisible: false,
-      isCommissionModalVisible: false
+      isCommissionModalVisible: false,
+      transModalVisible: false,
+      transModalType: null,
     };
 
     const {
@@ -97,13 +96,22 @@ class Candidate extends React.Component {
 
   toggleDelegateModal = () => {
     this.setState((prevState) => ({
-      isDelegateModalVisible: !prevState.isDelegateModalVisible
+      transModalVisible: !prevState.transModalVisible,
+      transModalType: STAKE_TYPE,
+    }));
+  };
+
+  toggleUnbondModal = () => {
+    this.setState((prevState) => ({
+      transModalVisible: !prevState.transModalVisible,
+      transModalType: UNBOND_TYPE,
     }));
   };
 
   toggleWithdrawModal = () => {
     this.setState((prevState) => ({
-      isWithdrawModalVisible: !prevState.isWithdrawModalVisible
+      transModalVisible: !prevState.transModalVisible,
+      transModalType: WITHDRAW_TYPE,
     }));
   };
 
@@ -140,7 +148,7 @@ class Candidate extends React.Component {
 
     return (
       <>
-        {delegatedStake !== "0" ? (
+        {delegatedStake === "0" ? (
           <Button type="primary" className="extra-button btn-stake" onClick={this.toggleDelegateModal}>
             Stake
           </Button>
@@ -148,13 +156,13 @@ class Candidate extends React.Component {
           <Button type="primary" className="extra-button btn-stake" onClick={this.toggleDelegateModal}>
             Stake More
           </Button>,
-          <Button type="primary" className="extra-button btn-unbond" onClick={this.toggleWithdrawModal}>
+          <Button type="primary" className="extra-button btn-unbond" onClick={this.toggleUnbondModal}>
             Unbond
           </Button>,
           <Button
             type="primary"
             className="extra-button btn-withdraw" 
-            onClick={this.confirmWithdraw}
+            onClick={this.toggleWithdrawModal}
             disabled={undelegatingStake === '0'}
           >
             withdraw
@@ -257,13 +265,19 @@ class Candidate extends React.Component {
     window.history.go(-1);
   }
 
+  toggleTransForm = () => {
+    this.setState({
+      transModalVisible: !this.state.transModalVisible
+    })
+  }
+
   render() {
     const {
       candidate,
       candidateId,
-      isDelegateModalVisible,
-      isWithdrawModalVisible,
-      isCommissionModalVisible
+      isCommissionModalVisible,
+      transModalType,
+      transModalVisible
     } = this.state;
 
     if (!candidate) {
@@ -275,15 +289,12 @@ class Candidate extends React.Component {
         <PageHeader title="Back to all validators"  onBack={this.goBack}/>
         <Card title="Candidate" className="candidate-card" extra={this.renderAction()}>
           {this.renderCandidateDetail()}
-          <DelegateForm
+          <TransForm
+            type={transModalType}
             candidateId={candidateId}
-            visible={isDelegateModalVisible}
-            onClose={this.toggleDelegateModal}
-          />
-          <WithdrawForm
             candidate={candidate}
-            visible={isWithdrawModalVisible}
-            onClose={this.toggleWithdrawModal}
+            visible={transModalVisible}
+            onClose={this.toggleTransForm}
           />
           <CommissionForm
             candidate={candidate}

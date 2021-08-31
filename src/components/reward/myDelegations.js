@@ -1,29 +1,36 @@
 import React, { useState } from "react";
 import { Card, Row, } from 'antd';
 import "./myDelegations.less";
+import TransForm from "../form-component";
 import DelegateForm from '../candidate/delegate-form';
 import WithdrawForm from '../candidate/withdraw-form';
 import Validator from "./validator";
+import {STAKE_TYPE, UNBOND_TYPE, WITHDRAW_TYPE} from "../../constant";
 
 const MyDelegations = (props) => {
     const [candidateId, setCandidateId] = useState("");
     const [candidate, setCandidate] = useState(null);
-    const [isWithdrawModalVisible, setIsWithdrawModalVisible] = useState(false);
-    const [isDelegateModalVisible, setIsDelegateModalVisible] = useState(false);
+    const [transModalVisible, setTransModalVisible] = useState(false);
+    const [transModalType, setTransModalType] = useState(null);
 
-    const toggleDelegateModal = () => {
-        setIsDelegateModalVisible(!isDelegateModalVisible);
-    }
-    const toggleWithdrawModal = () => {
-        setIsWithdrawModalVisible(!isWithdrawModalVisible);
+    const toggleTransForm = () => {
+        setTransModalVisible(!transModalVisible);
     }
     const stakeMethod = (id) => {
         setCandidateId(id);
-        toggleDelegateModal();
+        setTransModalType(STAKE_TYPE)
+        toggleTransForm();
     }
-    const unBondMethod = (data) => {
+    const unBondMethod = (id, data) => {
+        setCandidateId(id);
         setCandidate(data);
-        toggleWithdrawModal();
+        setTransModalType(UNBOND_TYPE)
+        toggleTransForm();
+    }
+    const withdrawMethod = (id) => {
+        setTransModalType(WITHDRAW_TYPE)
+        setCandidateId(id);
+        toggleTransForm();
     }
 
     const {candidates} = props;
@@ -35,18 +42,15 @@ const MyDelegations = (props) => {
         <Card title="My Delegations" className="myDelegations">
             <Row>
                 {candidateIds.map((validator, index) => {
-                    return <Validator key={index} {...validator} stakeMethod={stakeMethod} unBondMethod={unBondMethod}/>
+                    return <Validator key={index} {...validator} stakeMethod={stakeMethod} unBondMethod={unBondMethod} withdrawMethod={withdrawMethod}/>
                 })}
             </Row>
-            <DelegateForm
+            <TransForm
+                type={transModalType}
                 candidateId={candidateId}
-                visible={isDelegateModalVisible}
-                onClose={toggleDelegateModal}
-            />
-            <WithdrawForm
                 candidate={candidate}
-                visible={isWithdrawModalVisible}
-                onClose={toggleWithdrawModal}
+                visible={transModalVisible}
+                onClose={toggleTransForm}
             />
         </Card>
     )

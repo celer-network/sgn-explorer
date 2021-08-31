@@ -58,7 +58,7 @@ class ClaimForm extends React.Component {
                 <div className="mian-title">Claim Reward Completed</div>
                 <div className="sub-title">Congratulation! You’ve redeemed your rewards.</div>
                 <div className="action-check">Check on Etherscan</div>
-                <Button type="primary" className="action-ok" onClick={this.props.toggleClaimForm}>OK</Button>
+                <Button type="primary" className="action-ok" onClick={this.props.initRewardStatus}>OK</Button>
             </div>
         )
     }
@@ -72,7 +72,7 @@ class ClaimForm extends React.Component {
                 footer={null}
                 width={401}
                 className="claimForm-modal"
-                onCancel={this.props.toggleClaimForm}
+                onCancel={action !== SUCCESS_ACTION ? this.props.toggleClaimForm: this.props.initRewardStatus}
             >
                 <div className="claimform-container">
                     {action !== SUCCESS_ACTION ? this.renderContent() : this.renderSuccess()}

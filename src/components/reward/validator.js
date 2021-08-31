@@ -30,7 +30,7 @@ class Validator extends React.Component {
         this.contracts.DPoS.methods.confirmWithdraw.cacheSend(candidateId);
     };
     render() {
-        const {stakeMethod, unBondMethod, DPoS, candidateId} = this.props;
+        const {stakeMethod, unBondMethod, withdrawMethod, DPoS, candidateId} = this.props;
         const delegatorInfo = this.state.delegator;
         const candidates = _.values(DPoS.getCandidateInfo);
         const candidate = _.find(candidates, (candidate) => candidate.args[0] === candidateId);
@@ -74,12 +74,12 @@ class Validator extends React.Component {
                     </Row>
                     <Row justify="space-between">
                         <Col span={7}>
-                            <Button type="primary" className="extra-button btn-stake" onClick={stakeMethod} block>
+                            <Button type="primary" className="extra-button btn-stake" onClick={() => stakeMethod(candidateId)} block>
                                 Stake More
                             </Button>
                         </Col>
                         <Col span={7}>
-                            <Button type="primary" className="extra-button btn-unbond" onClick={unBondMethod} block>
+                            <Button type="primary" className="extra-button btn-unbond" onClick={() => unBondMethod(candidateId, candidate)} block>
                                 Unbond
                             </Button>
                         </Col>
@@ -88,7 +88,7 @@ class Validator extends React.Component {
                                 block
                                 type="primary"
                                 className="extra-button btn-withdraw" 
-                                onClick={this.confirmWithdraw}
+                                onClick={() => withdrawMethod(candidateId)}
                                 disabled={undelegatingStake === '0'}
                             >
                                 withdraw
